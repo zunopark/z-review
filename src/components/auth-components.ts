@@ -1,13 +1,39 @@
 import styled from "styled-components";
 import { Form } from "react-router-dom";
 
+export const Container = styled.div`
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+`;
+
+export const LeftContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const LeftTitle = styled.h1`
+  font-size: clamp(100px, 10vw, 200px);
+  font-weight: 600;
+  margin-bottom: 20px;
+`;
+
+export const LeftSubTitle = styled.h2`
+  font-size: 26px;
+`;
+
 export const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 420px;
+  width: 50vh;
   padding: 50px 0px;
+  justify-content: center;
+  padding: 20px;
 `;
 
 
@@ -36,9 +62,8 @@ export const Input = styled.input`
 `;
 
 export const Title = styled.h1`
-  font-size: 42px;
+  font-size: 36px;
   font-weight: 600;
-
 `;
 
 export const Error = styled.span`
