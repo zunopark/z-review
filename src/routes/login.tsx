@@ -3,9 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { FirebaseError } from "firebase/app";
-import { Wrapper, StyledForm, Input, Title, Error, Switcher } from "../components/auth-components";
+import { Wrapper, StyledForm, Input, Title, Error, Switcher, SocialLoginContainer } from "../components/auth-components";
 import GithubButton from "../components/github-button";
 import { Container, LeftContainer, LeftTitle, LeftSubTitle } from "../components/auth-components";
+import GoogleButton from "../components/google-button";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -30,7 +31,6 @@ export default function Login() {
             setIsLoading(true);
             // login
             const credentials = await signInWithEmailAndPassword(auth, email, password);
-            console.log(credentials.user);
             
             if (credentials.user) {
                 navigate("/");
@@ -56,13 +56,16 @@ export default function Login() {
             <StyledForm onSubmit={handleSubmit}>
                 <Input name="email" value={email} onChange={e => setEmail(e.target.value)} type="email" placeholder="이메일" required />
             <Input name="password" value={password} onChange={e => setPassword(e.target.value)} type="password" placeholder="패스워드" required />
-            <Input type="submit" value={isLoading ? "LOADING" : "로그인"} />
+            <Input type="submit" value={isLoading ? "Loading" : "로그인"} />
             </StyledForm>
             {error !== "" && <Error>{error}</Error>}
             <Switcher>
             계정이 없으신가요? <Link to="/create-account">계정 만들기</Link>
             </Switcher>
-            <GithubButton />
+            <SocialLoginContainer>
+                <GithubButton />
+                <GoogleButton />
+            </SocialLoginContainer>
         </Wrapper>
     </Container>
     )

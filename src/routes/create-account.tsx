@@ -3,9 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 import { FirebaseError } from "firebase/app";
-import { Wrapper, StyledForm, Input, Title, Error, Switcher } from "../components/auth-components";
+import { Wrapper, StyledForm, Input, Title, Error, Switcher, SocialLoginContainer } from "../components/auth-components";
 import GithubButton from "../components/github-button";
 import { Container, LeftContainer, LeftTitle, LeftSubTitle } from "../components/auth-components";
+import GoogleButton from "../components/google-button";
 
 
 export default function CreateAccount() {
@@ -36,7 +37,6 @@ export default function CreateAccount() {
             setIsLoading(true);
             // create account
             const credentials = await createUserWithEmailAndPassword(auth, email, password);
-            // console.log(credentials.user);
             // set the name of the user
             await updateProfile(credentials.user, {
                 displayName: name,
@@ -64,13 +64,16 @@ export default function CreateAccount() {
                 <Input name="email" value={email} onChange={e => setEmail(e.target.value)} type="email" placeholder="이메일" required />
                 <Input name="password" value={password} onChange={e => setPassword(e.target.value)} type="password" placeholder="비밀번호" required />
                 <Input name="passwordConfirm" value={passwordConfirm} onChange={e => setPasswordConfirm(e.target.value)} type="password" placeholder="비밀번호 확인" required />
-                <Input type="submit" value={isLoading ? "LOADING" : "계정 만들기"} />
+                <Input type="submit" value={isLoading ? "Loading" : "계정 만들기"} />
             </StyledForm>
             {error !== "" && <Error>{error}</Error>}
             <Switcher>
                 이미 계정이 있으신가요? <Link to="/login">로그인</Link>
             </Switcher>
-            <GithubButton />
+            <SocialLoginContainer>
+                <GithubButton />
+                <GoogleButton />
+            </SocialLoginContainer>
         </Wrapper>    
     </Container>
     )

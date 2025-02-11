@@ -79,3 +79,30 @@ export const Switcher = styled.span`
     color: #1d4ed8;
   }
 `;
+
+export const SocialButton = styled.button`
+background-color: white;
+font-weight: 500;
+padding: 10px 20px;
+border-radius: 50px;
+display: flex;
+gap: 5px;
+align-items: center;
+justify-content: center;
+border: 0;
+cursor: pointer;
+width: 100%;
+color: black;
+margin-top: 20px;
+`;
+
+export const SocialLogo = styled.img`
+  height: 25px;
+`;
+
+export const SocialLoginContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
