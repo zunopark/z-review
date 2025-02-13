@@ -1,18 +1,5 @@
-import styled from "styled-components";
-import PostReview from "../components/post-review";
-
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
+// import PostReview from "../components/post-review";
 
 export default function Home() {
-  return (
-    <Wrapper>
-      <PostReview />
-    </Wrapper>
-  )
+  return <h1>Home</h1>
 }

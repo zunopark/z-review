@@ -3,10 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { FirebaseError } from "firebase/app";
-import { Wrapper, StyledForm, Input, Title, Error, Switcher, SocialLoginContainer } from "../components/auth-components";
-import GithubButton from "../components/github-button";
-import { Container, LeftContainer, LeftTitle, LeftSubTitle } from "../components/auth-components";
-import GoogleButton from "../components/google-button";
+import { Wrapper, StyledForm, Input, Title, Error, Switcher, SocialLoginContainer } from "../components/styled/auth-components";
+import GithubButton from "../components/auth/github-button";
+import { Container, LeftContainer, LeftTitle, LeftSubTitle } from "../components/styled/auth-components";
+import GoogleButton from "../components/auth/google-button";
 
 export default function Login() {
     const navigate = useNavigate();
