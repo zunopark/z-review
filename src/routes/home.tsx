@@ -1,7 +1,7 @@
 // import PostReview from "../components/post-review";
 
 import styled from 'styled-components';
-import Review from "../components/review";
+import Review from "../components/review/review";
 
 const ReviewsContainer = styled.div`
   display: flex;

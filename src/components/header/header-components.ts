@@ -13,6 +13,7 @@ export const Wrapper = styled.div`
 export const Menu = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: flex-start;
   gap: 8px;
   padding: 8px 12px;
@@ -36,7 +37,7 @@ export const MenuItem = styled.div<{ $isActive?: boolean }>`
   transition: background-color 0.2s ease;
   width: fit-content;
   color: white;
-  font-weight: ${props => props.$isActive ? '700' : '300'};
+  font-weight: ${props => props.$isActive ? '700' : '350'};
   font-size: 20px;
 
   &:hover {
@@ -51,3 +52,37 @@ export const MenuItem = styled.div<{ $isActive?: boolean }>`
     stroke: white;
   }
 `;
+
+export const Logo = styled.div`
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 10px;
+`;
+
+export const MenuContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const PostButton = styled.button`
+  background-color: #D7DBDC;
+  color: black;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 90%;
+`;
+
+export const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+`;
+

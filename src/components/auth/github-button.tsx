@@ -1,7 +1,7 @@
 import { browserSessionPersistence, GithubAuthProvider, setPersistence, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
-import { SocialButton, SocialLogo } from "../styled/auth-components";
+import { SocialButton, SocialLogo } from "./auth-components";
 
 export default function GithubButton() {
     const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import { ReviewContainer, FlexRow, Avatar, Content, Header, UserName, UserHandle, Dot, TimeStamp, ReviewText, InteractionButtons, Button, Badge, UserLevel, ReviewedContent, ProductInfo, ProductName, RatingStars, Star, ReviewImages, ImageGrid, ReviewImage } from './styled/review-components';
+import { ReviewContainer, FlexRow, Avatar, Content, Header, UserName, UserHandle, Dot, TimeStamp, ReviewText, InteractionButtons, Button, Badge, UserLevel, ReviewedContent, ProductInfo, ProductName, RatingStars, Star, ReviewImages, ImageGrid, ReviewImage } from './review-components';
 
 export default function Review() {
   return (
@@ -27,6 +27,10 @@ export default function Review() {
           </ReviewedContent>
           
           <ReviewText>
+            This is an amazing product! The quality is outstanding and the customer 
+            service was excellent. Would definitely recommend!
+            This is an amazing product! The quality is outstanding and the customer 
+            service was excellent. Would definitely recommend!
             This is an amazing product! The quality is outstanding and the customer 
             service was excellent. Would definitely recommend!
           </ReviewText>
