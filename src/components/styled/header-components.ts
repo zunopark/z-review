@@ -19,7 +19,6 @@ export const Menu = styled.div`
   height: 100vh;
   position: sticky;
   top: 0;
-  border-right: 1px solid #70767B;
 `;
 
 export const StyledLink = styled(Link)`
@@ -37,7 +36,7 @@ export const MenuItem = styled.div<{ $isActive?: boolean }>`
   transition: background-color 0.2s ease;
   width: fit-content;
   color: white;
-  font-weight: ${props => props.$isActive ? '700' : '400'};
+  font-weight: ${props => props.$isActive ? '700' : '300'};
   font-size: 20px;
 
   &:hover {
