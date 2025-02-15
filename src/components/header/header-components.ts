@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 export const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: minmax(150px, 230px) 1fr; 
+  grid-template-columns: 1fr; 
+  background-color: #000;
   padding: 0px;
   width: 100%;
   max-width: 1280px;
@@ -18,8 +19,13 @@ export const Menu = styled.div`
   gap: 8px;
   padding: 8px 12px;
   height: 100vh;
-  position: sticky;
+  position: fixed;
   top: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 230px;
+  background-color: #000;
+  border-right: 1px solid rgb(47, 51, 54);
 `;
 
 export const StyledLink = styled(Link)`

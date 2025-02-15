@@ -2,7 +2,7 @@ import React from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import { auth, db } from "../../firebase";
-import { Form, Textarea, AttachFileButton, AttachFileInput, SubmitButton } from "./post-review";
+import { Form, Textarea, AttachFileButton, AttachFileInput, SubmitButton } from "./post-review-components";
 
 export default function PostReview() {
     const [isLoading, setIsLoading] = useState(false);

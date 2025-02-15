@@ -1,5 +1,3 @@
-// import PostReview from "../components/post-review";
-
 import styled from 'styled-components';
 import Review from "../components/review/review";
 

@@ -3,17 +3,17 @@ import styled from "styled-components";
 export const MainWrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  padding-left: 230px;
+  box-sizing: border-box;
 `;
 
 export const MainContainer = styled.div`
-  flex: 1;
+  flex: 0 1 auto;
   overflow-y: auto;
   padding: 20px;
-  border-left: 1px solid #70767B;
-  border-right: 1px solid #70767B;
-  
+  border-right: 1px solid rgb(47, 51, 54);
+  width: 100%;
   /* Hide scrollbar for Chrome, Safari and Opera */
   &::-webkit-scrollbar {
     display: none;
@@ -25,17 +25,16 @@ export const MainContainer = styled.div`
 `;
 
 export const Sidebar = styled.div`
-  height: 90vh;
-  width: 35%;
-  display: grid;
-  grid-template-rows: 2fr 1fr;
-  gap: 20px;
-  margin-top: 30px;
-  margin-left: 30px;
+  flex: 0 0 auto;
+  width: 320px;
+  height: fit-content;
+  margin: 20px;
+  position: sticky;
+  top: 20px;
 `;
 
 export const Top = styled.div`
-  border: 1px solid #70767B;
+  border: 1px solid rgb(47, 51, 54);
   border-radius: 10px;
   width: 90%;
   margin: 0 auto;
@@ -46,10 +45,10 @@ export const Top = styled.div`
 `;
 
 export const Bottom = styled.div`
-  border: 1px solid #70767B;
+  border: 1px solid rgb(47, 51, 54);
   border-radius: 10px;
   width: 90%;
-  margin: 0 auto;
+  margin: 20px auto 0;
   gap: 15px;
   padding: 10px;
   display: flex;
@@ -89,6 +88,5 @@ export const SubName = styled.span`
 export const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
 `;
 

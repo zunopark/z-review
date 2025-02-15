@@ -21,7 +21,6 @@ const ProfileImage = styled.img`
 const Info = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
 `;
 
 const Name = styled.span`
@@ -58,7 +57,7 @@ export default function Follow() {
             <ProfileImage src="https://picsum.photos/200/300" alt="profile" />
             <Info>
                 <Name>zzunopark</Name>
-            <SubName>@zzunopark</SubName>
+                <SubName>@zzunopark</SubName>
             </Info>
         </Content>
         <FollowButton>Follow</FollowButton>

@@ -12,6 +12,7 @@ import { auth } from "./firebase";
 import ProtectedRoute from "./components/protected-route";
 import Search from "./routes/search";
 import Bookmark from "./routes/bookmark";
+import Post from "./routes/post";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
         path: "/bookmark",
         element: <Bookmark />,
       },
+      {
+        path: "/post",
+        element: <Post />, 
+      },
     ],
   },
   {
@@ -53,11 +58,11 @@ const GlobalStyle = createGlobalStyle`
     color: white;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     box-sizing: border-box;
+    line-height: 1.3;
   }
 `;
 
 const Wrapper = styled.div`
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;

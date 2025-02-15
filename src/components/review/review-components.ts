@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export const ReviewContainer = styled.div`
-  max-width: 36rem;
-  border: 1px solid #70767B;
+  border: 1px solid rgb(47, 51, 54);
   padding: 1rem;
   border-radius: 0.5rem;
 `;
