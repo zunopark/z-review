@@ -62,8 +62,8 @@ export default function Layout() {
             Logout
           </MenuItem>
         </MenuContainer>
-        <ButtonContainer>
-          <PostButton>POST</PostButton>
+        <ButtonContainer onClick={() => navigate("/post")}>
+          <PostButton>리뷰 작성하기</PostButton>
         </ButtonContainer>
       </Menu>
       <MainWrapper>
