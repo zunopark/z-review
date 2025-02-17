@@ -30,7 +30,6 @@ export const Textarea = styled.textarea`
   border: none;
   resize: none;
   font-size: 16px;
-  font-family: system-ui;
   padding: 12px 0;
   outline: none;
   background-color: transparent;
