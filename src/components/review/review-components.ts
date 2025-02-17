@@ -108,6 +108,8 @@ export const ProductInfo = styled.div`
 
 export const ProductName = styled.span`
   font-weight: 600;
+  font-size: 16px;
+  margin-right: 4px;
 `;
 
 export const RatingStars = styled.div`
@@ -115,8 +117,8 @@ export const RatingStars = styled.div`
   gap: 2px;
 `;
 
-export const Star = styled.span<{ filled: boolean }>`
-  color: ${props => props.filled ? '#ffc107' : '#e4e5e9'};
+export const Star = styled.span<{ $filled: boolean }>`
+  color: ${props => props.$filled ? '#ffc107' : '#e4e5e9'};
 `;
 
 export const ReviewImages = styled.div`
@@ -141,3 +143,15 @@ export const ReviewImage = styled.img`
     opacity: 0.9;
   }
 `;
+
+export interface IReview {
+  id: string;
+  text: string;
+  rating: number;
+  createdAt: number;
+  username: string;
+  userId: string;
+  fileUrls: string[];
+  content: string;
+  category: string;
+}

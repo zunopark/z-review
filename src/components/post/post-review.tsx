@@ -19,18 +19,20 @@ import {
   Wrapper,
   CategorySearchBar,
   CategorySearchBarInput,
-  CategorySearchBarButton,
   RatingContainer,
   RatingStarContainer,
   StarButton,
 } from "./post-review-components";
+import { useNavigate } from "react-router-dom";
 
 export default function PostReview() {
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [text, setText] = useState("");
-    const [file, setFile] = useState<string | null>(null);
+    const [files, setFiles] = useState<string[]>([]);
     const [isCategorySearchBarOpen, setIsCategorySearchBarOpen] = useState(false);
     const [category, setCategory] = useState("");
+    const [content, setContent] = useState("");
     const [rating, setRating] = useState(0);
 
     const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -38,35 +40,60 @@ export default function PostReview() {
     }
 
     const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { files } = event.target;
+        const fileList = event.target.files;
         
-        if (files && files.length === 1 && files[0].size < 1024 * 1024) {
-            const reader = new FileReader();
+        if (!fileList) return;
 
-            reader.onloadend = () => {
-                setFile(reader.result as string);
+        const newFiles = Array.from(fileList);
+        
+        if (files.length + newFiles.length > 2) {
+            alert('최대 2개의 이미지만 업로드할 수 있습니다.');
+            return;
+        }
+
+        newFiles.forEach(file => {
+            if (file.size > 1024 * 1024) {
+                alert('파일 크기는 1MB 이하여야 합니다.');
+                return;
             }
 
-            reader.readAsDataURL(files[0]);
-        }
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setFiles(prev => [...prev, reader.result as string]);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    const removeImage = (index: number) => {
+        setFiles(prev => prev.filter((_, i) => i !== index));
     }
 
     const handleRatingClick = (selectedRating: number) => {
         setRating(selectedRating);
     };
 
-    const StarIcon = ({ filled }: { filled: boolean }) => (
+    const StarIcon = ({ $filled }: { $filled: boolean }) => (
         <svg
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            fill={filled ? "#FFD700" : "none"}
-            stroke={filled ? "#FFD700" : "#E0E0E0"}
+            fill={$filled ? "#FFD700" : "none"}
+            stroke={$filled ? "#FFD700" : "#E0E0E0"}
             strokeWidth="2"
         >
             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
         </svg>
     );
+
+    const resetForm = () => {
+        setText("");
+        setFiles([]);
+        setRating(0);
+        setCategory("");
+        setContent("");
+        setIsCategorySearchBarOpen(false);
+    }
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -82,16 +109,21 @@ export default function PostReview() {
                 createdAt: Date.now(),
                 username: user.displayName || "익명의 사용자",
                 userId: user.uid,
-                fileUrl: file,
+                fileUrls: files,
+                content : content,
+                category : category
             });
-            setText("");
-            setFile(null);
-            setRating(0);
+            resetForm();
+            navigate("/");
         } catch (error) {
             console.log(error);
         } finally {
             setIsLoading(false);
         }
+    }
+
+    const onContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setContent(event.target.value);
     }
 
     const openCategorySearchBar = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -110,7 +142,7 @@ export default function PostReview() {
         </CategoryContainer>
         {isCategorySearchBarOpen && (
             <CategorySearchBar>
-                <CategorySearchBarInput type="text" placeholder={`${category} 검색`} />
+                <CategorySearchBarInput onChange={onContentChange} type="text" placeholder={`${category} 검색`} />
             </CategorySearchBar>
         )}
         <RatingContainer>
@@ -119,11 +151,11 @@ export default function PostReview() {
                     <StarButton
                         key={star}
                         onClick={() => handleRatingClick(star)}
-                        isSelected={star <= rating}
+                        $isSelected={star <= rating}
                         type="button"
                         aria-label={`Rate ${star} stars`}
                     >
-                        <StarIcon filled={star <= rating} />
+                        <StarIcon $filled={star <= rating} />
                     </StarButton>
                 ))}
             </RatingStarContainer>
@@ -148,9 +180,31 @@ export default function PostReview() {
                         onChange={onChange} 
                         required 
                     />
-                    {file && (
+                    {files.length > 0 && (
                         <ImagePreviewContainer>
-                            <PreviewImage src={file} alt="attached" />
+                            {files.map((file, index) => (
+                                <div key={index} style={{ position: 'relative' }}>
+                                    <PreviewImage src={file} alt={`attached-${index}`} />
+                                    <button
+                                        onClick={() => removeImage(index)}
+                                        style={{
+                                            position: 'absolute',
+                                            top: '8px',
+                                            right: '8px',
+                                            background: 'rgba(0, 0, 0, 0.5)',
+                                            border: 'none',
+                                            borderRadius: '50%',
+                                            width: '24px',
+                                            height: '24px',
+                                            cursor: 'pointer',
+                                            color: 'white'
+                                        }}
+                                        type="button"
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+                            ))}
                         </ImagePreviewContainer>
                     )}
                     <ActionBar>
@@ -161,8 +215,8 @@ export default function PostReview() {
                         </AttachFileButton>
                         <SubmitButton 
                             type="submit" 
-                            value={isLoading ? "작성중" : "리뷰 작성하기"} 
-                            hasText={text.length > 0}
+                            value={isLoading ? "게시 중..." : "게시하기"} 
+                            $hasText={text.length > 0}
                         />
                     </ActionBar>
                 </ContentContainer>
@@ -171,7 +225,8 @@ export default function PostReview() {
                 type="file" 
                 id="file" 
                 accept="image/*" 
-                onChange={onFileChange} 
+                onChange={onFileChange}
+                multiple
             />
         </Form>
     </Wrapper>

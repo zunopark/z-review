@@ -1,43 +1,72 @@
-import { ReviewContainer, FlexRow, Avatar, Content, Header, UserName, UserHandle, Dot, TimeStamp, ReviewText, InteractionButtons, Button, Badge, UserLevel, ReviewedContent, ProductInfo, ProductName, RatingStars, Star, ReviewImages, ImageGrid, ReviewImage } from './review-components';
+import { useEffect, useRef, useState } from 'react';
+import { formatRelativeTime } from '../../util';
+import { ReviewContainer, FlexRow, Avatar, Content, Header, UserName, UserHandle, Dot, TimeStamp, ReviewText, InteractionButtons, Button, Badge, UserLevel, ReviewedContent, ProductInfo, ProductName, RatingStars, Star, ReviewImages, ImageGrid, ReviewImage, IReview, DeleteButton, ThreeDots, OptionModal, OptionItem } from './review-components';
+import ReviewOptions from '../review-option-modal/review-option-modal';
 
-export default function Review() {
+export default function Review({ review }: { review: IReview }) {
+  console.log(review);
+  const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
+
+  const toggleOptionModal = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsOptionModalOpen(!isOptionModalOpen);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current && 
+        !modalRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsOptionModalOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <ReviewContainer>
       <FlexRow>
         <Avatar />
         <Content>
           <Header>
-            <UserName>리뷰왕</UserName>
+            <UserName>{review.username}</UserName>
             <UserHandle>@zzunopark</UserHandle>
             <Dot>·</Dot>
-            <TimeStamp>2h</TimeStamp>
-            <Badge>영화</Badge>
+            <TimeStamp>
+                {formatRelativeTime(review.createdAt)}
+            </TimeStamp>
+            <Badge>{review.category}</Badge>
             <UserLevel>Lv.11</UserLevel>
+            <ReviewOptions reviewId={review.id} userId={review.userId} />
           </Header>
           
           <ReviewedContent>
             <ProductInfo>
-              <ProductName>인터스텔라</ProductName>
+              <ProductName>{review.content}</ProductName>
                 <RatingStars>
-                {[1, 2, 3, 4, 5].map((star) => (
-                    <Star key={star} filled={true}>★</Star>
-                ))}
+                    {[1, 2, 3, 4, 5].map((star) => (
+                        <Star key={star} $filled={star <= review.rating}>★</Star>
+                    ))}
                 </RatingStars>
             </ProductInfo>
           </ReviewedContent>
           
           <ReviewText>
-            This is an amazing product! The quality is outstanding and the customer 
-            service was excellent. Would definitely recommend!
-            This is an amazing product! The quality is outstanding and the customer 
-            service was excellent. Would definitely recommend!
-            This is an amazing product! The quality is outstanding and the customer 
-            service was excellent. Would definitely recommend!
+            {review.text}
           </ReviewText>
           
           <ReviewImages>
             <ImageGrid>
-              {['https://blog.kakaocdn.net/dn/bmIwxA/btrVE1Ql6YL/kfImMiXEd19Kch9ziopPj0/img.jpg', 'https://blog.kakaocdn.net/dn/bmIwxA/btrVE1Ql6YL/kfImMiXEd19Kch9ziopPj0/img.jpg'].map((image, index) => (
+              {review.fileUrls.map((image, index) => (
                 <ReviewImage 
                   key={index}
                   src={image}

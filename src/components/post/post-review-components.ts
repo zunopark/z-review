@@ -41,15 +41,15 @@ export const Textarea = styled.textarea`
 `;
 
 export const ImagePreviewContainer = styled.div`
-  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
   margin-top: 12px;
-  border-radius: 16px;
-  overflow: hidden;
 `;
 
 export const PreviewImage = styled.img`
   width: 100%;
-  max-height: 250px;
+  height: 200px;
   object-fit: cover;
   border-radius: 16px;
   border: 1px solid rgb(239, 243, 244);
@@ -75,18 +75,18 @@ export const AttachFileInput = styled.input`
   display: none;
 `;
 
-export const SubmitButton = styled.input<{ hasText: boolean }>`
+export const SubmitButton = styled.input<{ $hasText: boolean }>`
   background-color: #D7DBDC;
   border: none;
   border-radius: 20px;
   padding: 8px 16px;
   color: black;
   font-weight: 600;
-  cursor: ${props => props.hasText ? 'pointer' : 'default'};
+  cursor: ${props => props.$hasText ? 'pointer' : 'default'};
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: ${props => props.hasText ? '#1a8cd8' : '#8ecdf8'};
+    background-color: ${props => props.$hasText ? '#1a8cd8' : '#8ecdf8'};
   }
 `;
 
@@ -126,12 +126,12 @@ export const RatingStarContainer = styled.div`
   gap: 4px;
 `;
 
-export const StarButton = styled.button<{ isSelected: boolean }>`
+export const StarButton = styled.button<{ $isSelected: boolean }>`
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
-  color: ${props => props.isSelected ? '#FFD700' : '#E0E0E0'};
+  color: ${props => props.$isSelected ? '#FFD700' : '#E0E0E0'};
   font-size: 24px;
   transition: color 0.2s, transform 0.1s;
 
