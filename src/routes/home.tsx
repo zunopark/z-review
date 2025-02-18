@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 import Review from "../components/review/review";
-import { useEffect, useState } from 'react';
-import { doc, getDocs, limit, onSnapshot } from 'firebase/firestore';
-import { collection, query, orderBy } from 'firebase/firestore';
-import { IReview } from '../components/review/review-components';
-import { db } from '../firebase';
-import { Unsubscribe } from 'firebase/auth';
+import { useEffect } from 'react';
+import { useReviewStore } from '../store/review/useReviewStore';
 
 const ReviewsContainer = styled.div`
   display: flex;
@@ -14,52 +10,11 @@ const ReviewsContainer = styled.div`
 `;
 
 export default function Home() {
-  const [reviews, setReviews] = useState<IReview[]>([]);
+  const { reviews, getRealtimeReviews, unsubscribe } = useReviewStore();
 
   useEffect(() => {
-    let unsubscribe: Unsubscribe | null = null;
-    const fetchReviews = async () => {
-      const reviewRef = collection(db, "reviews");
-      const q = query(reviewRef, orderBy("createdAt", "desc"), limit(20));
-      
-      // static update
-      // const querySnapshot = await getDocs(q);
-      // const reviews = querySnapshot.docs.map((doc) => {
-      //   const { text, rating, createdAt, username, userId, fileUrls, content, category } = doc.data();
-      //   return {
-      //     id: doc.id,
-      //     text,
-      //     rating,
-      //     createdAt,
-      //     username,
-      //     userId,
-      //     fileUrls,
-      //     content,
-      //     category
-      //   };
-      // });
-      
-      // realtime update
-      unsubscribe = await onSnapshot(q, (snapshot) => {
-        const reviews = snapshot.docs.map((doc) => {
-          const { text, rating, createdAt, username, userId, fileUrls, content, category } = doc.data();
-          return {
-            id: doc.id,
-            text,
-            rating,
-            createdAt,
-            username,
-            userId,
-            fileUrls,
-            content,
-            category
-          };
-        });
-        setReviews(reviews);
-      });
-      return () => unsubscribe?.();
-    };
-    fetchReviews();
+    getRealtimeReviews();
+    return () => unsubscribe?.();
   }, []);
 
   return (

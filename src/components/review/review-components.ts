@@ -27,6 +27,7 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   gap: 0.3rem;
+  width: max-content;
 `;
 
 export const UserName = styled.span`
@@ -89,8 +90,7 @@ export const Badge = styled.span`
 `;
 
 export const UserLevel = styled.span`
-  color: #00a65a;
-  font-size: 12px;
+  color: white;
   font-size: 12px;
   margin-left: 8px;
 `;
@@ -108,8 +108,8 @@ export const ProductInfo = styled.div`
 
 export const ProductName = styled.span`
   font-weight: 600;
-  font-size: 16px;
-  margin-right: 4px;
+  font-size: 18px;
+  margin-right: 5px;
 `;
 
 export const RatingStars = styled.div`
@@ -145,12 +145,12 @@ export const ReviewImage = styled.img`
 `;
 
 export interface IReview {
-  id: string;
+  id?: string; // unique id of review
   text: string;
   rating: number;
   createdAt: number;
   username: string;
-  userId: string;
+  userId: string; // unique id of user
   fileUrls: string[];
   content: string;
   category: string;

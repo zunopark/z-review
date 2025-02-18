@@ -1,36 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
 import { formatRelativeTime } from '../../util';
-import { ReviewContainer, FlexRow, Avatar, Content, Header, UserName, UserHandle, Dot, TimeStamp, ReviewText, InteractionButtons, Button, Badge, UserLevel, ReviewedContent, ProductInfo, ProductName, RatingStars, Star, ReviewImages, ImageGrid, ReviewImage, IReview, DeleteButton, ThreeDots, OptionModal, OptionItem } from './review-components';
+import { ReviewContainer, FlexRow, Avatar, Content, Header, UserName, UserHandle, Dot, TimeStamp, ReviewText, InteractionButtons, Button, Badge, UserLevel, ReviewedContent, ProductInfo, ProductName, RatingStars, Star, ReviewImages, ImageGrid, ReviewImage, IReview } from './review-components';
 import ReviewOptions from '../review-option-modal/review-option-modal';
 
 export default function Review({ review }: { review: IReview }) {
   console.log(review);
-  const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
-  const modalRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLDivElement>(null);
-
-  const toggleOptionModal = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsOptionModalOpen(!isOptionModalOpen);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current && 
-        !modalRef.current.contains(event.target as Node) &&
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target as Node)
-      ) {
-        setIsOptionModalOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   return (
     <ReviewContainer>
@@ -46,7 +19,7 @@ export default function Review({ review }: { review: IReview }) {
             </TimeStamp>
             <Badge>{review.category}</Badge>
             <UserLevel>Lv.11</UserLevel>
-            <ReviewOptions reviewId={review.id} userId={review.userId} />
+            <ReviewOptions reviewId={review.id || ""} userId={review.userId} />
           </Header>
           
           <ReviewedContent>

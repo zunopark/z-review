@@ -1,11 +1,11 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
-import { Wrapper, Menu, StyledLink, MenuItem, MenuContainer, PostButton, ButtonContainer } from "./header/header-components";
-import { MainWrapper, MainContainer, Sidebar, Top, Bottom, ProfileImage, SideTitle, More, SubName, UserInfo } from "../components/styled/main-components";
-import { Logo } from "./header/header-components";
-import Trending from "./trending/trending";
-import Follow from "./follow/follow";
+import { Wrapper, Menu, StyledLink, MenuItem, MenuContainer, PostButton, ButtonContainer } from "../header/header-components";
+import { MainWrapper, MainContainer, Sidebar, Top, Bottom, ProfileImage, SideTitle, More, SubName, UserInfo } from "./main-components";
+import { Logo } from "../header/header-components";
+import Trending from "../trending/trending";
+import Follow from "../follow/follow";
 
 
 export default function Layout() {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Navigate } from "react-router-dom";
-
+import LoadingScreen from "./loading-screen";
 const auth = getAuth();
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -18,7 +18,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     }, []);
 
     if (loading) {
-        return <div>Loading</div>; // Prevents flickering
+        return <LoadingScreen />; // Prevents flickering
     }
 
     return user ? children : <Navigate to="/login" />;

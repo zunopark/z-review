@@ -1,7 +1,6 @@
 import React from "react";
-import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
-import { auth, db } from "../../firebase";
+import { auth } from "../../firebase";
 import {
   Form,
   PostContainer,
@@ -24,8 +23,10 @@ import {
   StarButton,
 } from "./post-review-components";
 import { useNavigate } from "react-router-dom";
+import { useReviewStore } from "../../store/review/useReviewStore";
 
 export default function PostReview() {
+    const { postReviewToFirebase } = useReviewStore();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [text, setText] = useState("");
@@ -102,8 +103,7 @@ export default function PostReview() {
         
         try {
             setIsLoading(true);
-            const reviewRef = collection(db, "reviews");
-            const docRef = await addDoc(reviewRef, {
+            const params = {
                 text,
                 rating,
                 createdAt: Date.now(),
@@ -112,7 +112,8 @@ export default function PostReview() {
                 fileUrls: files,
                 content : content,
                 category : category
-            });
+            }
+            const reviewId = await postReviewToFirebase(params);
             resetForm();
             navigate("/");
         } catch (error) {

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const ThreeDots = styled.span`
-  margin-left: 11rem;
   cursor: pointer;
   display: flex;
   align-items: center;
