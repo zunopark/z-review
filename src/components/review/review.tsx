@@ -1,24 +1,24 @@
 import { formatRelativeTime } from '../../util';
-import { ReviewContainer, FlexRow, Avatar, Content, Header, UserName, UserHandle, Dot, TimeStamp, ReviewText, InteractionButtons, Button, Badge, UserLevel, ReviewedContent, ProductInfo, ProductName, RatingStars, Star, ReviewImages, ImageGrid, ReviewImage, IReview } from './review-components';
+import { ReviewContainer, FlexRow, Avatar, Content, Header, UserName, UserHandle, Dot, TimeStamp, ReviewText, InteractionButtons, Button, Badge, UserLevel, ReviewedContent, ProductInfo, ProductName, RatingStars, Star, ReviewImages, ImageGrid, ReviewImage, IReview, UserInfoContainer } from './review-components';
 import ReviewOptions from '../review-option-modal/review-option-modal';
 
 export default function Review({ review }: { review: IReview }) {
-  console.log(review);
-
   return (
     <ReviewContainer>
       <FlexRow>
         <Avatar />
         <Content>
           <Header>
-            <UserName>{review.username}</UserName>
-            <UserHandle>@zzunopark</UserHandle>
-            <Dot>·</Dot>
-            <TimeStamp>
-                {formatRelativeTime(review.createdAt)}
-            </TimeStamp>
-            <Badge>{review.category}</Badge>
-            <UserLevel>Lv.11</UserLevel>
+            <UserInfoContainer>
+              <UserName>{review.userName}</UserName>
+              <UserHandle>@zzunopark</UserHandle>
+              <Dot>·</Dot>
+              <TimeStamp>
+                  {formatRelativeTime(review.createdAt)}
+              </TimeStamp>
+              <Badge>{review.category}</Badge>
+              <UserLevel>Lv.11</UserLevel>
+            </UserInfoContainer>
             <ReviewOptions reviewId={review.id || ""} userId={review.userId} />
           </Header>
           

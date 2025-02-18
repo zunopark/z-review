@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ThreeDots, OptionModal, OptionItem } from "./review-option-modal-components";
 import { auth, db } from '../../firebase';
 import { deleteDoc, doc } from 'firebase/firestore';
+import Modal from '../modal/modal';
 
 interface ReviewOptionsProps {
   reviewId: string;
@@ -13,6 +14,18 @@ export default function ReviewOptions({ reviewId, userId }: ReviewOptionsProps) 
   const modalRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
   const user = auth.currentUser;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleConfirm = async () => {
+    if (user?.uid === userId) {
+      await deleteDoc(doc(db, "reviews", reviewId));
+    }
+    setIsModalOpen(false);
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -39,33 +52,36 @@ export default function ReviewOptions({ reviewId, userId }: ReviewOptionsProps) 
 
   const handleDelete = async () => {
     try {
-        const confirm = window.confirm("정말 삭제하시겠습니까?");
-        if (confirm) {
-            if (user?.uid === userId) {
-                await deleteDoc(doc(db, "reviews", reviewId));
-            }
-        }
+      setIsModalOpen(true);
     } catch (error) {
       console.error("Error deleting review:", error);
     }
   };
 
   return (
-    <ThreeDots ref={buttonRef} onClick={toggleOptionModal}>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-      </svg>
-      {isOptionModalOpen && (
-        <OptionModal ref={modalRef}>
-          {user?.uid === userId && (
-            <>
-                <OptionItem>수정</OptionItem>
-                <OptionItem onClick={handleDelete}>삭제</OptionItem>
-            </>
-          )}
-          <OptionItem>신고</OptionItem>
-        </OptionModal>
-      )}
-    </ThreeDots>
+    <>
+      <ThreeDots ref={buttonRef} onClick={toggleOptionModal}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        {isOptionModalOpen && (
+          <OptionModal ref={modalRef}>
+            {user?.uid === userId && (
+              <>
+                  <OptionItem>수정</OptionItem>
+                  <OptionItem onClick={handleDelete}>삭제</OptionItem>
+              </>
+            )}
+            <OptionItem>신고</OptionItem>
+          </OptionModal>
+        )}
+      </ThreeDots>
+      <Modal
+        isOpen={isModalOpen}
+        message="정말 리뷰를 삭제하시겠습니까?"
+        onConfirm={handleConfirm}
+        onClose={handleClose}
+      />
+    </>
   );
 }

@@ -6,22 +6,33 @@ import { MainWrapper, MainContainer, Sidebar, Top, Bottom, ProfileImage, SideTit
 import { Logo } from "../header/header-components";
 import Trending from "../trending/trending";
 import Follow from "../follow/follow";
-
+import Modal from "../modal/modal";
+import { useState } from "react";
 
 export default function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
   const user = auth.currentUser;
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   // console.log(user);
   
   const onLogout = async () => {
-    const ok = confirm("로그아웃 하시겠습니까?");
-    if (ok) {
+    setIsModalOpen(true);
+  }
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleConfirm = async () => {
+    try {
+      setIsModalOpen(false);
       await signOut(auth);
       navigate("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
     }
-  }
+  };
 
   return (  
     <Wrapper>
@@ -87,6 +98,12 @@ export default function Layout() {
           </Bottom>
         </Sidebar>
       </MainWrapper>
+      <Modal
+        isOpen={isModalOpen}
+        message="정말 로그아웃 하시겠습니까?"
+        onConfirm={handleConfirm}
+        onClose={handleClose}
+      />
     </Wrapper>
   )
 }

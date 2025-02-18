@@ -1,92 +1,16 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import { updateProfile } from "firebase/auth";
-import { useReviewStore } from "../store/review/useReviewStore";
-import Review from "../components/review/review";
-const ProfileContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const AvatarUpload = styled.label`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  svg {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    cursor: pointer;
-  }
-`;
-
-const AvatarImage = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-  cursor: pointer;
-`;
-
-const AvatarInput = styled.input`
-  display: none;
-`;
-
-const UserInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const UserHandle = styled.div`
-  font-size: 16px;
-  color: #6b7280;
-`;
-
-const UserNameInput = styled.input`
-  font-size: 1.5rem;
-  font-weight: bold;
-  border: none;
-  border-bottom: 2px solid #ccc;
-  outline: none;
-  padding: 4px 8px;
-  background: transparent;
-  color: white;
-  margin-bottom: 10px;
-  
-  &:focus {
-    border-bottom-color: #007bff;
-  }
-`;
-
-const UserName = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 4px 8px;
-  
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-    border-radius: 4px;
-  }
-`;
-
-const UserReviews = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-top: 20px;
-`;
+import { useReviewStore } from "../../store/review/useReviewStore";
+import Review from "../../components/review/review";
+import { ProfileContainer, AvatarUpload, AvatarImage, AvatarInput, UserInfo, UserHandle, UserName, UserNameInput, UserReviews, NoReview } from "./profile-components";
 
 export default function Profile() {
   const user = auth.currentUser;
   const [avatarUrl, setAvatarUrl] = useState(user?.photoURL ?? "");
   const [userName, setUserName] = useState(user?.displayName ?? "");
   const [isEditing, setIsEditing] = useState(false);
-  const { userReviews, getUserReviews } = useReviewStore();
+  const { userReviews, getUserReviews, updateUserReviewsName } = useReviewStore();
 
   useEffect(() => {
     if (user) {
@@ -101,10 +25,26 @@ export default function Profile() {
 
     if (fileList.length === 1) {
       const newFile = fileList[0];
-      setAvatarUrl(URL.createObjectURL(newFile));
-      await updateProfile(user, {
-        photoURL: avatarUrl
-      });
+      
+      if (newFile.size > 1024 * 1024) {
+        alert("파일 크기는 1MB 이하여야 합니다.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const newAvatarUrl = reader.result as string;
+        setAvatarUrl(newAvatarUrl);  // Update state
+        try {
+          await updateProfile(user, {
+            photoURL: newAvatarUrl  // Use the new URL directly
+          });
+        } catch (error) {
+          console.error("Error updating profile:", error);
+          alert("프로필 업데이트에 실패했습니다.");
+        }
+      };
+      reader.readAsDataURL(newFile);
     } else {
       alert("최대 1개의 이미지만 업로드할 수 있습니다.");
     }
@@ -117,13 +57,24 @@ export default function Profile() {
   const handleNameSubmit = async () => {
     try {
       if (auth.currentUser) {
+        // Update profile
         await updateProfile(auth.currentUser, {
           displayName: userName
         });
+  
+        // Update all reviews for this user with the new username
+        if (userReviews.length > 0) {
+          const batch = await updateUserReviewsName(auth.currentUser.uid, userName);
+          if (batch) {
+            console.log("Successfully updated username in all reviews");
+          }
+        }
+  
         setIsEditing(false);
       }
     } catch (error) {
       console.error("Error updating profile:", error);
+      alert("프로필 업데이트에 실패했습니다.");
     }
   };
 
@@ -168,7 +119,7 @@ export default function Profile() {
             <Review key={review.id} review={review} />
           ))
         ) : (
-          <div>작성한 리뷰가 없네요! 리뷰 작성하러 가볼까요?</div>
+          <NoReview>작성한 리뷰가 없네요! 리뷰 작성하러 가볼까요?</NoReview>
         )}
       </UserReviews>
     </ProfileContainer>

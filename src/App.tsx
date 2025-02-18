@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import Layout from "./components/layout/layout"
 import Home from "./routes/home"
-import Profile from "./routes/profile"
+import Profile from "./routes/profile/profile"
 import Login from "./routes/login";
 import CreateAccount from "./routes/create-account";
 import reset from "styled-reset";

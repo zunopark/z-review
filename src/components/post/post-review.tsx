@@ -107,7 +107,7 @@ export default function PostReview() {
                 text,
                 rating,
                 createdAt: Date.now(),
-                username: user.displayName || "익명의 사용자",
+                userName: user.displayName || "익명의 사용자",
                 userId: user.uid,
                 fileUrls: files,
                 content : content,
