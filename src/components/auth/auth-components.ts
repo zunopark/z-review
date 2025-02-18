@@ -16,7 +16,7 @@ export const LeftContainer = styled.div`
 `;
 
 export const LeftTitle = styled.h1`
-  font-size: clamp(100px, 10vw, 200px);
+  font-size: clamp(100px, 10vw, 230px);
   font-weight: 600;
   margin-bottom: 20px;
 `;

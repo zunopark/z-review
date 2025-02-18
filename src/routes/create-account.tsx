@@ -3,10 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 import { FirebaseError } from "firebase/app";
-import { Wrapper, StyledForm, Input, Title, Error, Switcher, SocialLoginContainer } from "../components/auth-components";
-import GithubButton from "../components/github-button";
-import { Container, LeftContainer, LeftTitle, LeftSubTitle } from "../components/auth-components";
-import GoogleButton from "../components/google-button";
+import { Wrapper, StyledForm, Input, Title, Error, Switcher, SocialLoginContainer } from "../components/auth/auth-components";
+import GithubButton from "../components/auth/github-button";
+import { Container, LeftContainer, LeftTitle, LeftSubTitle } from "../components/auth/auth-components";
+import GoogleButton from "../components/auth/google-button";
 
 
 export default function CreateAccount() {
@@ -56,7 +56,7 @@ export default function CreateAccount() {
 
     return (
     <Container>
-        <LeftContainer><LeftTitle>Z Review</LeftTitle><LeftSubTitle>이 세상 모든 리뷰</LeftSubTitle></LeftContainer>
+        <LeftContainer><LeftTitle>Z</LeftTitle><LeftSubTitle>이 세상 모든 리뷰</LeftSubTitle></LeftContainer>
         <Wrapper>
             <Title>가입하기</Title>
             <StyledForm onSubmit={handleSubmit}>

@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import Layout from "./components/layout"
+import Layout from "./components/layout/layout"
 import Home from "./routes/home"
 import Profile from "./routes/profile"
 import Login from "./routes/login";
@@ -10,6 +10,9 @@ import { useEffect, useState } from "react";
 import LoadingScreen from "./components/loading-screen";
 import { auth } from "./firebase";
 import ProtectedRoute from "./components/protected-route";
+import Search from "./routes/search";
+import Bookmark from "./routes/bookmark";
+import Post from "./routes/post";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +26,18 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/search",
+        element: <Search />,
+      },
+      {
+        path: "/bookmark",
+        element: <Bookmark />,
+      },
+      {
+        path: "/post",
+        element: <Post />, 
       },
     ],
   },
@@ -41,13 +56,13 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: black;
     color: white;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: PretendardVariable, sans-serif;
     box-sizing: border-box;
+    line-height: 1.3;
   }
 `;
 
 const Wrapper = styled.div`
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;

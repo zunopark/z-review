@@ -1,18 +1,27 @@
-import styled from "styled-components";
-import PostReview from "../components/post-review";
+import styled from 'styled-components';
+import Review from "../components/review/review";
+import { useEffect } from 'react';
+import { useReviewStore } from '../store/review/useReviewStore';
 
-
-const Wrapper = styled.div`
+const ReviewsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 20px;
 `;
 
-
 export default function Home() {
+  const { reviews, getRealtimeReviews, unsubscribe } = useReviewStore();
+
+  useEffect(() => {
+    getRealtimeReviews();
+    return () => unsubscribe?.();
+  }, []);
+
   return (
-    <Wrapper>
-      <PostReview />
-    </Wrapper>
+    <ReviewsContainer>
+      {reviews.map((review, index) => (
+        <Review key={index} review={review} />
+      ))}
+    </ReviewsContainer>
   )
 }
