@@ -27,7 +27,8 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  width: max-content;
+  width: 100%;
+  justify-content: space-between;
 `;
 
 export const UserName = styled.span`
@@ -144,12 +145,18 @@ export const ReviewImage = styled.img`
   }
 `;
 
+export const UserInfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
 export interface IReview {
   id?: string; // unique id of review
   text: string;
   rating: number;
   createdAt: number;
-  username: string;
+  userName: string;
   userId: string; // unique id of user
   fileUrls: string[];
   content: string;
