@@ -30,17 +30,23 @@ export const useReviewStore = create<ReviewState>((set) => ({
     const querySnapshot = await getDocs(query(reviewRef, orderBy("createdAt", "desc"), limit(20)));
 
     const reviews = querySnapshot.docs.map((doc) => {
-    const { text, rating, createdAt, userName, userId, fileUrls, content, category } = doc.data();
+    const { text, createdAt, userName, userId, fileUrls, contentName, contentId, category, userDescription, storyRating, characterRating, technicalRating, themeRating, recommendationRating } = doc.data();
     return {
         id: doc.id,
         text,
-        rating,
         createdAt,
         userName,
         userId,
         fileUrls,
-        content,
-        category
+        contentName,
+        contentId,
+        category,
+        userDescription,
+        storyRating,
+        characterRating,
+        technicalRating,
+        themeRating,
+        recommendationRating
     };
     });
     set({ reviews });
@@ -50,17 +56,23 @@ export const useReviewStore = create<ReviewState>((set) => ({
     const reviewRef = collection(db, "reviews")
     const querySnapshot = await getDocs(query(reviewRef, where("userId", "==", userId), orderBy("createdAt", "desc"), limit(20)));
     const reviews = querySnapshot.docs.map((doc) => {
-      const { text, rating, createdAt, userName, userId, fileUrls, content, category } = doc.data();
+      const { text, createdAt, userName, userId, fileUrls, contentName, contentId, category, userDescription, storyRating, characterRating, technicalRating, themeRating, recommendationRating } = doc.data();
       return {
         id: doc.id,
         text,
-        rating,
         createdAt,
         userName,
         userId,
         fileUrls,
-        content,
-        category
+        contentName,
+        contentId,
+        category,
+        userDescription,
+        storyRating,
+        characterRating,
+        technicalRating,
+        themeRating,
+        recommendationRating
       };
     });
     set({ userReviews: reviews });
@@ -72,17 +84,23 @@ export const useReviewStore = create<ReviewState>((set) => ({
     
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const reviews = snapshot.docs.map((doc) => {
-        const { text, rating, createdAt, userName, userId, fileUrls, content, category } = doc.data()
+        const { text, createdAt, userName, userId, fileUrls, contentName, contentId, category, userDescription, storyRating, characterRating, technicalRating, themeRating, recommendationRating } = doc.data()
         return {
           id: doc.id,
           text,
-          rating,
           createdAt,
           userName,
           userId,
           fileUrls,
-          content,
-          category
+          contentName,
+          contentId,
+          category,
+          userDescription,
+          storyRating,
+          characterRating,
+          technicalRating,
+          themeRating,
+          recommendationRating
         }
       });
       set({ reviews });

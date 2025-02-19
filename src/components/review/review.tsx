@@ -1,8 +1,9 @@
 import { formatRelativeTime } from '../../util';
-import { ReviewContainer, FlexRow, Avatar, Content, Header, UserName, UserHandle, Dot, TimeStamp, ReviewText, InteractionButtons, Button, Badge, UserLevel, ReviewedContent, ProductInfo, ProductName, RatingStars, Star, ReviewImages, ImageGrid, ReviewImage, IReview, UserInfoContainer } from './review-components';
+import { ReviewContainer, FlexRow, Avatar, Content, Header, UserName, UserHandle, Dot, TimeStamp, ReviewText, InteractionButtons, Button, Badge, UserLevel, ReviewedContent, ProductInfo, ProductName, RatingStars, Star, ReviewImages, ImageGrid, ReviewImage, IReview, UserInfoContainer, RatingResultContainer, RatingInfoContainer, RatingInfo } from './review-components';
 import ReviewOptions from '../review-option-modal/review-option-modal';
 
 export default function Review({ review }: { review: IReview }) {
+  console.log(review);
   return (
     <ReviewContainer>
       <FlexRow>
@@ -11,35 +12,53 @@ export default function Review({ review }: { review: IReview }) {
           <Header>
             <UserInfoContainer>
               <UserName>{review.userName}</UserName>
-              <UserHandle>@zzunopark</UserHandle>
+              <UserHandle>@{review.userName}</UserHandle>
               <Dot>·</Dot>
               <TimeStamp>
                   {formatRelativeTime(review.createdAt)}
               </TimeStamp>
               <Badge>{review.category}</Badge>
-              <UserLevel>Lv.11</UserLevel>
+              <UserLevel>Lv.1</UserLevel>
             </UserInfoContainer>
             <ReviewOptions reviewId={review.id || ""} userId={review.userId} />
           </Header>
           
           <ReviewedContent>
             <ProductInfo>
-              <ProductName>{review.content}</ProductName>
-                <RatingStars>
-                    {[1, 2, 3, 4, 5].map((star) => (
-                        <Star key={star} $filled={star <= review.rating}>★</Star>
-                    ))}
-                </RatingStars>
+              <ProductName>{review.contentName}</ProductName>
+              {review.category === "영화" && (
+                <RatingResultContainer>
+                  <RatingInfoContainer>
+                    <RatingInfo>개연성 {review.storyRating}</RatingInfo>
+                    <RatingInfo>캐릭터 {review.characterRating}</RatingInfo>
+                    <RatingInfo>기술 {review.technicalRating}</RatingInfo>
+                    <RatingInfo>테마 {review.themeRating}</RatingInfo>
+                    <RatingInfo>추천도 {review.recommendationRating}</RatingInfo>
+                  </RatingInfoContainer>
+                  <RatingStars>
+                      {[1, 2, 3, 4, 5].map((star) => (
+                          <Star key={star} $filled={star <= (review.storyRating + review.characterRating + review.technicalRating + review.themeRating + review.recommendationRating) / 5}>★</Star>
+                      ))}
+                  </RatingStars>
+                </RatingResultContainer>
+              )}
             </ProductInfo>
           </ReviewedContent>
           
           <ReviewText>
-            {review.text}
+            {review.userDescription}
           </ReviewText>
           
           <ReviewImages>
             <ImageGrid>
-              {review.fileUrls.map((image, index) => (
+              {review.category === "영화" && review.fileUrls.map((image, index) => (
+                <ReviewImage 
+                  key={index}
+                  src={`https://image.tmdb.org/t/p/w92/${image}`}
+                  alt={`Review image ${index + 1}`}
+                />
+              ))}
+              {review.category !== "영화" && review.fileUrls.map((image, index) => (
                 <ReviewImage 
                   key={index}
                   src={image}

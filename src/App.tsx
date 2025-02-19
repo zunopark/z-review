@@ -11,8 +11,8 @@ import LoadingScreen from "./components/loading-screen";
 import { auth } from "./firebase";
 import ProtectedRoute from "./components/protected-route";
 import Search from "./routes/search";
-import Post from "./routes/post";
 import Bookmark from "./routes/boomark/bookmark";
+import Post from "./routes/post";
 
 const router = createBrowserRouter([
   {

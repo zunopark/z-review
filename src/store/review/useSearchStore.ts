@@ -27,7 +27,6 @@ export const useSearchStore = create<SearchState>((set) => ({
             'accept': 'application/json'
         }
     });
-    console.log(response);
     set({ searchMovieListData: response.data.results });
   },
   

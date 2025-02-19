@@ -3,13 +3,14 @@ import { ThreeDots, OptionModal, OptionItem } from "./review-option-modal-compon
 import { auth, db } from '../../firebase';
 import { deleteDoc, doc } from 'firebase/firestore';
 import Modal from '../modal/modal';
-
+import { useNavigate } from 'react-router-dom';
 interface ReviewOptionsProps {
   reviewId: string;
   userId: string;
 }
 
 export default function ReviewOptions({ reviewId, userId }: ReviewOptionsProps) {
+  const navigate = useNavigate();
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -19,6 +20,7 @@ export default function ReviewOptions({ reviewId, userId }: ReviewOptionsProps) 
   const handleConfirm = async () => {
     if (user?.uid === userId) {
       await deleteDoc(doc(db, "reviews", reviewId));
+      navigate("/");
     }
     setIsModalOpen(false);
   };

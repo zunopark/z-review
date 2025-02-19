@@ -115,6 +115,8 @@ export const ProductName = styled.span`
 
 export const RatingStars = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 2px;
 `;
 
@@ -151,14 +153,38 @@ export const UserInfoContainer = styled.div`
   gap: 0.5rem;
 `;
 
+export const RatingResultContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+export const RatingInfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+export const RatingInfo = styled.span`
+  font-size: 12px;
+`;
+
+
+
+
 export interface IReview {
   id?: string; // unique id of review
-  text: string;
-  rating: number;
+  userDescription: string;
+  storyRating: number;
+  characterRating: number;
+  technicalRating: number;
+  themeRating: number;
+  recommendationRating: number;
   createdAt: number;
   userName: string;
   userId: string; // unique id of user
   fileUrls: string[];
-  content: string;
-  category: string;
+  contentName: string;
+  contentId: string;
+  category: string; // 영화, 드라마, 애니메이션, 영화 등
 }

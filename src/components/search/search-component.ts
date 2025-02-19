@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const CategorySearchBar = styled.div``;
+export const CategorySearchBar = styled.div`
+  margin-bottom: 10px;
+`;
 
 export const CategorySearchBarInput = styled.input`
   width: 100%;

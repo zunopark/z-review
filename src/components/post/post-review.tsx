@@ -26,6 +26,13 @@ import {
   SearchResultItem,
   SearchResultImage,
   SearchResultTitle,
+  FormContainer,
+  RatingTitle,
+  RaitingInfoContainer,
+  RatingResult,
+  MovieInfoContainer,
+  MovieInfoImage,
+  MovieInfoTitle
 } from "./post-review-components";
 import { useNavigate } from "react-router-dom";
 import { useReviewStore } from "../../store/review/useReviewStore";
@@ -42,8 +49,14 @@ export default function PostReview() {
     const [text, setText] = useState("");
     const [files, setFiles] = useState<string[]>([]);
     const [category, setCategory] = useState("");
-    const [content, setContent] = useState("");
+    const [content, setContent] = useState<any>(null);
+    // 영화
     const [rating, setRating] = useState(0);
+    const [rating2, setRating2] = useState(0);
+    const [rating3, setRating3] = useState(0);
+    const [rating4, setRating4] = useState(0);
+    const [rating5, setRating5] = useState(0);
+    // 영화
     const [step, setStep] = useState(1);
 
     useEffect(() => {
@@ -89,8 +102,18 @@ export default function PostReview() {
         setFiles(prev => prev.filter((_, i) => i !== index));
     }
 
-    const handleRatingClick = (selectedRating: number) => {
-        setRating(selectedRating);
+    const handleRatingClick = (selectedRating: number, ratingType: number) => {
+        if (ratingType === 1) {
+            setRating(selectedRating);
+        } else if (ratingType === 2) {
+            setRating2(selectedRating);
+        } else if (ratingType === 3) {
+            setRating3(selectedRating);
+        } else if (ratingType === 4) {
+            setRating4(selectedRating);
+        } else if (ratingType === 5) {
+            setRating5(selectedRating);
+        }
     };
 
     const StarIcon = ({ $filled }: { $filled: boolean }) => (
@@ -122,14 +145,19 @@ export default function PostReview() {
         try {
             setIsLoading(true);
             const params = {
-                text,
-                rating,
-                createdAt: Date.now(),
-                userName: user.displayName || "익명의 사용자",
+                userDescription: text,
+                storyRating: rating,
+                characterRating: rating2,
+                technicalRating: rating3,
+                themeRating: rating4,
+                recommendationRating: rating5,
                 userId: user.uid,
+                userName: user.displayName || "익명의 사용자",
                 fileUrls: files,
-                content : content,
-                category : category
+                contentId : content.id,
+                contentName : content.original_title,
+                category : category,
+                createdAt: Date.now(),
             }
             const reviewId = await postReviewToFirebase(params);
             resetForm();
@@ -151,6 +179,7 @@ export default function PostReview() {
         // 어떤 언어든 간에 id 가 있으니 데이터베이스에는 그걸로 저장하면 될듯 유니크 값으로 저장하기
         // 영화진흥원 데이터를 사용해야할수도 있음
         setContent(movie);
+        setFiles([movie.poster_path]);
         setStep(3);
     }
 
@@ -169,38 +198,97 @@ export default function PostReview() {
             <>
                 <Search />
                 <SearchResultContainer>
-                    {searchMovieListData?.map((movie) => (
+                    {searchMovieListData?.length > 0 ? searchMovieListData.map((movie) => (
                         <SearchResultItem key={movie.id} onClick={() => handleMovieClick(movie)}>
-                            <SearchResultImage src={`https://image.tmdb.org/t/p/w92/${movie.poster_path}`} alt={movie.title} />
+                            <SearchResultImage src={`https://image.tmdb.org/t/p/w92/${movie.poster_path}`} alt={movie.original_title} />
                             <SearchResultTitle>{movie.original_title}</SearchResultTitle>
                         </SearchResultItem>
-                    ))}
+                    )) : <SearchResultTitle>검색 결과가 없습니다.</SearchResultTitle>}
                 </SearchResultContainer>
                 <BackButton onClick={() => setStep(1)}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-3"><path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" /></svg></BackButton>
             </>
         )}
 
         {step === 3 && (
-            <>
+            <FormContainer>
+                <MovieInfoContainer>
+                    <MovieInfoImage src={`https://image.tmdb.org/t/p/w92/${content.poster_path}`} alt={content.original_title} />
+                    <MovieInfoTitle>{content.original_title}</MovieInfoTitle>
+                </MovieInfoContainer>
                 <RatingContainer>
-                <RatingStarContainer>
-                    {[1, 2, 3, 4, 5].map((star) => (
-                        <StarButton
-                            key={star}
-                            onClick={() => handleRatingClick(star)}
-                            $isSelected={star <= rating}
-                            type="button"
-                            aria-label={`Rate ${star} stars`}
-                        >
-                            <StarIcon $filled={star <= rating} />
-                        </StarButton>
-                    ))}
-                </RatingStarContainer>
-                {rating > 0 && (
-                    <span style={{ color: '#536471', fontSize: '14px' }}>
-                        {rating}/5
-                    </span>
-                )}
+                    <RatingStarContainer>
+                        <RatingTitle>스토리(개연성)</RatingTitle>
+                        <RaitingInfoContainer>
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <StarButton
+                                    key={star}
+                                    onClick={() => handleRatingClick(star, 1)}
+                                    $isSelected={star <= rating}
+                                    type="button"
+                                    aria-label={`Rate ${star} stars`}
+                                >
+                                    <StarIcon $filled={star <= rating} />
+                                </StarButton>
+                            ))}
+                        </RaitingInfoContainer>
+                        <RatingTitle>캐릭터(배우연기)</RatingTitle>
+                        <RaitingInfoContainer>
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <StarButton
+                                    key={star}
+                                    onClick={() => handleRatingClick(star, 2)}
+                                    $isSelected={star <= rating2}
+                                    type="button"
+                                    aria-label={`Rate ${star} stars`}
+                                >
+                                    <StarIcon $filled={star <= rating2} />
+                                </StarButton>
+                            ))}
+                        </RaitingInfoContainer>
+                        <RatingTitle>기술력(CG, 연출, 영상미)</RatingTitle>
+                        <RaitingInfoContainer>
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <StarButton
+                                    key={star}
+                                    onClick={() => handleRatingClick(star, 3)}
+                                    $isSelected={star <= rating3}
+                                    type="button"
+                                    aria-label={`Rate ${star} stars`}
+                                >
+                                    <StarIcon $filled={star <= rating3} />
+                                </StarButton>
+                            ))}
+                        </RaitingInfoContainer>
+                        <RatingTitle>주제의식(메세지)</RatingTitle>
+                        <RaitingInfoContainer>
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <StarButton
+                                    key={star}
+                                    onClick={() => handleRatingClick(star, 4)}
+                                    $isSelected={star <= rating4}
+                                    type="button"
+                                    aria-label={`Rate ${star} stars`}
+                                >
+                                    <StarIcon $filled={star <= rating4} />
+                                </StarButton>
+                            ))}
+                        </RaitingInfoContainer>
+                        <RatingTitle>추천도</RatingTitle>
+                        <RaitingInfoContainer>
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <StarButton
+                                    key={star}
+                                    onClick={() => handleRatingClick(star, 5)}
+                                    $isSelected={star <= rating5}
+                                    type="button"
+                                    aria-label={`Rate ${star} stars`}
+                                >
+                                    <StarIcon $filled={star <= rating5} />
+                                </StarButton>
+                            ))}
+                        </RaitingInfoContainer>
+                    </RatingStarContainer>
+                    <RatingResult>평점 : {(rating + rating2 + rating3 + rating4 + rating5) / 5}</RatingResult>
                 </RatingContainer>
                 <Form onSubmit={onSubmit}>
                 <PostContainer>
@@ -217,7 +305,7 @@ export default function PostReview() {
                             onChange={onChange} 
                             required 
                         />
-                        {files.length > 0 && (
+                        {category !== "영화" && files.length > 0 && (
                             <ImagePreviewContainer>
                                 {files.map((file, index) => (
                                     <div key={index} style={{ position: 'relative' }}>
@@ -245,11 +333,13 @@ export default function PostReview() {
                             </ImagePreviewContainer>
                         )}
                         <ActionBar>
-                            <AttachFileButton htmlFor="file">
-                                <svg viewBox="0 0 24 24" width="20" height="20" fill="#1d9bf0">
+                            {category !== "영화" && (
+                                <AttachFileButton htmlFor="file">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#1d9bf0">
                                     <path d="M3 5.5C3 4.119 4.119 3 5.5 3h13C19.881 3 21 4.119 21 5.5v13c0 1.381-1.119 2.5-2.5 2.5h-13C4.119 21 3 19.881 3 18.5v-13zM5.5 5c-.276 0-.5.224-.5.5v9.086l3-3 3 3 5-5 3 3V5.5c0-.276-.224-.5-.5-.5h-13zM19 15.414l-3-3-5 5-3-3-3 3V18.5c0 .276.224.5.5.5h13c.276 0 .5-.224.5-.5v-3.086z" />
                                 </svg>
                             </AttachFileButton>
+                            )}
                             <SubmitButton 
                                 type="submit" 
                                 value={isLoading ? "게시 중..." : "게시하기"} 
@@ -267,7 +357,7 @@ export default function PostReview() {
                 />
                 </Form>
                 <BackButton onClick={() => setStep(2)}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-3"><path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" /></svg></BackButton>
-            </>
+            </FormContainer>
         )}
     </Wrapper>
   );

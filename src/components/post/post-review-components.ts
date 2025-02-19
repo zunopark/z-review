@@ -106,14 +106,16 @@ export const Category = styled.div`
 
 export const RatingContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  margin: 12px 16px;
+  justify-content: center;
 `;
 
 export const RatingStarContainer = styled.div`
   display: flex;
-  gap: 4px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const StarButton = styled.button<{ $isSelected: boolean }>`
@@ -185,6 +187,48 @@ export const SearchResultImage = styled.img`
 `;
 
 export const SearchResultTitle = styled.div`
+  font-size: 14px;
+  font-weight: 600;
+`;
+
+export const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+export const RatingTitle = styled.div`
+  font-size: 14px;
+  font-weight: 600;
+`;
+
+export const RaitingInfoContainer = styled.div`
+  display: flex;
+  margin-bottom: 15px;
+`;
+
+export const RatingResult = styled.div`
+  font-size: 20px;
+  font-weight: 600;
+`;
+
+export const MovieInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgb(47, 51, 54);
+  padding-bottom: 12px;
+`;
+
+export const MovieInfoImage = styled.img`
+  width: 150px;
+  height: 200px;
+  object-fit: cover;
+`;
+
+export const MovieInfoTitle = styled.div`
   font-size: 14px;
   font-weight: 600;
 `;
