@@ -91,27 +91,17 @@ export const SubmitButton = styled.input<{ $hasText: boolean }>`
 `;
 
 export const CategoryContainer = styled.div`
-  display: flex;
-  gap: 8px;
-  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 150px));
+  gap: 15px;
+  padding: 10px;
 `;
 
 export const Category = styled.div`
   padding: 8px 12px;
   border-radius: 20px;
-  background-color: #D7DBDC;
-  color: black;
-  cursor: pointer;
-`;
-
-export const CategorySearchBar = styled.div`
-  padding: 16px;
-`;
-
-export const CategorySearchBarInput = styled.input`
-  width: 100%;
-  background-color: transparent;
   color: white;
+  cursor: pointer;
 `;
 
 export const RatingContainer = styled.div`
@@ -138,4 +128,63 @@ export const StarButton = styled.button<{ $isSelected: boolean }>`
   &:hover {
     transform: scale(1.1);
   }
+`;
+
+export const CategoryName = styled.div`
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const CategoryImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  &:hover {
+    transform: scale(1.02);
+  }
+`;
+
+export const BackButton = styled.span`
+    cursor: pointer;
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+`;
+
+export const SearchResultContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  padding: 10px;
+`;
+
+export const SearchResultItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+`;
+
+export const SearchResultImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  &:hover {
+    transform: scale(1.02);
+  }
+`;
+
+export const SearchResultTitle = styled.div`
+  font-size: 14px;
+  font-weight: 600;
 `;

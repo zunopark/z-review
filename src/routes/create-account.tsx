@@ -3,9 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 import { FirebaseError } from "firebase/app";
-import { Wrapper, StyledForm, Input, Title, Error, Switcher, SocialLoginContainer } from "../components/auth/auth-components";
+import { Wrapper, StyledForm, Input, Title, Error, Switcher, SocialLoginContainer, Container, LeftContainer, LeftTitle, LeftSubTitle } from "../components/auth/auth-components";
 import GithubButton from "../components/auth/github-button";
-import { Container, LeftContainer, LeftTitle, LeftSubTitle } from "../components/auth/auth-components";
 import GoogleButton from "../components/auth/google-button";
 
 
