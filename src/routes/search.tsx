@@ -6,14 +6,15 @@ import {
   SearchResultTitle,
 } from '../components/post/post-review-components';
 import { useSearchStore } from '../store/search/useSearchStore';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 
 export default function SearchPage() {
   const { searchedListData } = useSearchStore();
-  const [content, setContent] = useState<any>(null);
+  const navigate = useNavigate();
 
   const handleContentClick = (content: any) => {
-    setContent(content);
+    alert("검색 기능은 추가 예정입니다.");
+    navigate('/');
   };
 
   return (
