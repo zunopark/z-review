@@ -12,7 +12,7 @@ export default function SearchPage() {
   const { searchedListData } = useSearchStore();
   const navigate = useNavigate();
 
-  const handleContentClick = (content: any) => {
+  const handleContentClick = () => {
     alert("검색 기능은 추가 예정입니다.");
     navigate('/');
   };
@@ -25,7 +25,7 @@ export default function SearchPage() {
           searchedListData.map((content) => (
             <SearchResultItem
               key={content.id}
-              onClick={() => handleContentClick(content)}
+              onClick={() => handleContentClick()}
             >
               <SearchResultImage
                 src={`https://image.tmdb.org/t/p/w92/${content.poster_path}`}
