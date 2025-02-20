@@ -36,9 +36,9 @@ import {
 } from "./post-review-components";
 import { useNavigate } from "react-router-dom";
 import { useReviewStore } from "../../store/review/useReviewStore";
-import { useCategoryStore } from "../../store/review/useCategoryStore";
+import { useCategoryStore } from "../../store/category/useCategoryStore";
 import { Search } from "../search/search";
-import { useSearchStore } from "../../store/review/useSearchStore";
+import { useSearchStore } from "../../store/search/useSearchStore";
 
 export default function PostReview() {
     const { postReviewToFirebase } = useReviewStore();
@@ -160,6 +160,7 @@ export default function PostReview() {
                 createdAt: Date.now(),
             }
             const reviewId = await postReviewToFirebase(params);
+            console.log(reviewId);
             resetForm();
             navigate("/");
         } catch (error) {

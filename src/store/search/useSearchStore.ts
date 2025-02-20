@@ -1,13 +1,9 @@
 import { create } from 'zustand'
-import { collection, query, orderBy, limit, getDocs} from 'firebase/firestore'
-import { db } from '../../firebase'
 import axios from 'axios';
-import { parseXMLtoJSON } from '../../util';
 
 interface SearchState {
   searchedListData: any[]
   getMovie: (value: string) => Promise<void>
-  getMusic: (value: string) => Promise<void>
   getAnime: (value: string) => Promise<void>
   getTvShow: (value: string) => Promise<void>
   resetSearchMovieListData: () => void
@@ -32,8 +28,6 @@ export const useSearchStore = create<SearchState>((set) => ({
     });
     set({ searchedListData: response.data.results });
   },
-
-  getMusic: async (value: string) => {},
 
   getAnime: async (value: string) => {
     const url = `https://api.themoviedb.org/3/search/tv?query=${value}`;

@@ -91,8 +91,3 @@ export const ButtonContainer = styled.div`
   align-items: center;
   margin-bottom: 50px;
 `;
-
-export const ThreeDot = styled.div`
-  width: 26px;
-  height: 26px;
-`;

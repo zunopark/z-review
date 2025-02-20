@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { CategorySearchBar, CategorySearchBarInput } from "./search-component";
-import { useSearchStore } from "../../store/review/useSearchStore";
-
-interface ISearchResult {
-    id: string;
-    title: string;
-}
+import { useSearchStore } from "../../store/search/useSearchStore";
 
 function useDebounce<T>(value: T, delay: number): T {
     const [debouncedValue, setDebouncedValue] = useState<T>(value);
@@ -26,7 +21,7 @@ function useDebounce<T>(value: T, delay: number): T {
 export const Search = ({ category }: { category: string }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const { getMovie, getMusic, getAnime, getTvShow } = useSearchStore();
+    const { getMovie, getAnime, getTvShow } = useSearchStore();
 
     const onContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -41,7 +36,6 @@ export const Search = ({ category }: { category: string }) => {
             if (category === "영화") {
                 getMovie(debouncedSearchTerm);
             } else if (category === "음악") {
-                // getMusic(debouncedSearchTerm);
                 alert("음악 검색 기능은 아직 준비중입니다.");
             } else if (category === "애니") {
                 getAnime(debouncedSearchTerm);
