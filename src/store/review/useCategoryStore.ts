@@ -6,6 +6,7 @@ interface ICategory {
   id: string;
   name: string;
   count: number;
+  indexName: string;
 }
 
 interface CategoryState {
@@ -21,11 +22,12 @@ export const useCategoryStore = create<CategoryState>((set) => ({
     const querySnapshot = await getDocs(query(reviewRef, orderBy("count", "desc"), limit(20)));
 
     const categoryListData = querySnapshot.docs.map((doc) => {
-    const { name, count } = doc.data();
+    const { name, count, indexName } = doc.data();
     return {
         id: doc.id,
         name,
         count,
+        indexName,
     };
     });
     set({ categoryListData : categoryListData });

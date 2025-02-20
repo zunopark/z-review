@@ -140,8 +140,8 @@ export const CategoryName = styled.div`
 `;
 
 export const CategoryImage = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 130px;
+  height: 180px;
   object-fit: cover;
   border-radius: 10px;
   cursor: pointer;
@@ -175,8 +175,6 @@ export const SearchResultItem = styled.div`
 `;
 
 export const SearchResultImage = styled.img`
-  width: 100%;
-  height: 100%;
   object-fit: cover;
   border-radius: 10px;
   cursor: pointer;

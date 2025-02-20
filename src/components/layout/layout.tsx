@@ -1,7 +1,7 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
-import { Wrapper, Menu, StyledLink, MenuItem, MenuContainer, PostButton, ButtonContainer } from "../header/header-components";
+import { Wrapper, Menu, StyledLink, MenuItem, MenuContainer, PostButton, ButtonContainer, ThreeDot } from "../header/header-components";
 import { MainWrapper, MainContainer, Sidebar, Top, Bottom, ProfileImage, SideTitle, More, SubName, UserInfo } from "./main-components";
 import { Logo } from "../header/header-components";
 import Trending from "../trending/trending";
@@ -55,10 +55,10 @@ export default function Layout() {
           </StyledLink>
           <StyledLink to="/profile">
             <MenuItem $isActive={location.pathname === "/profile"}>
-            {user?.photoURL ? <ProfileImage src={user.photoURL} alt="" /> : <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} className="size-6" stroke="white"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>}
+              {user?.photoURL ? <ProfileImage src={user.photoURL} alt="" /> : <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} className="size-6" stroke="white"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>}
               <UserInfo>
                 {user?.displayName || "Profile"}
-                <SubName>@zzunopark</SubName>
+                <SubName>@{user?.email?.split("@")[0]}</SubName>
               </UserInfo>
             </MenuItem>
           </StyledLink>
@@ -71,6 +71,8 @@ export default function Layout() {
           <MenuItem onClick={onLogout}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} className="size-6" stroke="white"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" /></svg>
             Logout
+          </MenuItem>
+          <MenuItem onClick={onLogout}>
           </MenuItem>
         </MenuContainer>
         <ButtonContainer onClick={() => navigate("/post")}>

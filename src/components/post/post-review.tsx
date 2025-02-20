@@ -43,7 +43,7 @@ import { useSearchStore } from "../../store/review/useSearchStore";
 export default function PostReview() {
     const { postReviewToFirebase } = useReviewStore();
     const { getCategory, categoryListData } = useCategoryStore();
-    const { searchMovieListData, resetSearchMovieListData } = useSearchStore();
+    const { searchedListData, resetSearchMovieListData } = useSearchStore();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [text, setText] = useState("");
@@ -174,12 +174,8 @@ export default function PostReview() {
         setStep(2);
     }
 
-    const handleMovieClick = (movie: any) => {
-        // 여기 근데 영어로 나오는것 어떻게 저장할지 고민 필요
-        // 어떤 언어든 간에 id 가 있으니 데이터베이스에는 그걸로 저장하면 될듯 유니크 값으로 저장하기
-        // 영화진흥원 데이터를 사용해야할수도 있음
-        setContent(movie);
-        setFiles([movie.poster_path]);
+    const handleContentClick = (content: any) => {
+        setContent(content);
         setStep(3);
     }
 
@@ -188,7 +184,7 @@ export default function PostReview() {
         {step === 1 && <CategoryContainer>
             {categoryListData?.map((category, index) => (
                 <Category onClick={openCategorySearchBar} key={index}>
-                    <CategoryImage src={`/category/movie.jpg`} alt={category.name} />
+                    <CategoryImage src={`/category/${category.indexName}.webp`} alt={category.name} />
                     <CategoryName>{category.name}</CategoryName>
                 </Category>
             ))}
@@ -196,12 +192,12 @@ export default function PostReview() {
 
         {step === 2 && (
             <>
-                <Search />
+                <Search category={category} />
                 <SearchResultContainer>
-                    {searchMovieListData?.length > 0 ? searchMovieListData.map((movie) => (
-                        <SearchResultItem key={movie.id} onClick={() => handleMovieClick(movie)}>
-                            <SearchResultImage src={`https://image.tmdb.org/t/p/w92/${movie.poster_path}`} alt={movie.original_title} />
-                            <SearchResultTitle>{movie.original_title}</SearchResultTitle>
+                    {searchedListData?.length > 0 ? searchedListData.map((content) => (
+                        <SearchResultItem key={content.id} onClick={() => handleContentClick(content)}>
+                            <SearchResultImage src={`https://image.tmdb.org/t/p/w92/${content.poster_path}`} alt={content.original_title || content.original_name} />
+                            <SearchResultTitle>{content.original_title || content.original_name}</SearchResultTitle>
                         </SearchResultItem>
                     )) : <SearchResultTitle>검색 결과가 없습니다.</SearchResultTitle>}
                 </SearchResultContainer>
@@ -333,13 +329,11 @@ export default function PostReview() {
                             </ImagePreviewContainer>
                         )}
                         <ActionBar>
-                            {category !== "영화" && (
-                                <AttachFileButton htmlFor="file">
-                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#1d9bf0">
+                            <AttachFileButton htmlFor="file">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="#1d9bf0">
                                     <path d="M3 5.5C3 4.119 4.119 3 5.5 3h13C19.881 3 21 4.119 21 5.5v13c0 1.381-1.119 2.5-2.5 2.5h-13C4.119 21 3 19.881 3 18.5v-13zM5.5 5c-.276 0-.5.224-.5.5v9.086l3-3 3 3 5-5 3 3V5.5c0-.276-.224-.5-.5-.5h-13zM19 15.414l-3-3-5 5-3-3-3 3V18.5c0 .276.224.5.5.5h13c.276 0 .5-.224.5-.5v-3.086z" />
                                 </svg>
                             </AttachFileButton>
-                            )}
                             <SubmitButton 
                                 type="submit" 
                                 value={isLoading ? "게시 중..." : "게시하기"} 

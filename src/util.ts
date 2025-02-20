@@ -32,3 +32,15 @@ export function formatRelativeTime(timestamp: number): string {
         day: '2-digit'
     }).replace(/\. /g, '-').replace('.', '');
 }
+
+export function parseXMLtoJSON(xml: string) {
+    try {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xml, "text/xml");
+        const json = JSON.parse(JSON.stringify(xmlDoc));
+        return json;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}

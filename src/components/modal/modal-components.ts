@@ -17,7 +17,7 @@ export const ModalContainer = styled.div`
 export const ModalContent = styled.div`
   background: #D7DBDC;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   min-width: 300px;
   max-width: 500px;
   position: relative;
@@ -34,19 +34,21 @@ export const ModalMessage = styled.div`
 
 export const ModalConfirm = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
 `;
 
-export const ModalConfirmButton = styled.button`
-  background-color: #D7DBDC;
-  color: black;
-  border: none;
+export const ModalConfirmButton = styled.button<{ backgroundColor: string, color: string, border: string }>`
+  background-color: ${props => props.backgroundColor};
+  color: ${props => props.color};
+  border: ${props => props.border};
   border-radius: 20px;
   padding: 10px 20px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 700;
+  width: 100%;
 `;
 
