@@ -40,6 +40,16 @@ import { useCategoryStore } from '../../store/category/useCategoryStore';
 import { Search } from '../search/search';
 import { useSearchStore } from '../../store/search/useSearchStore';
 
+// Add this interface before the component
+interface ContentItem {
+  id: number;
+  poster_path: string;
+  original_title?: string;
+  original_name?: string;
+  name?: string;
+  original_language: string;
+}
+
 export default function PostReview() {
   const { postReviewToFirebase } = useReviewStore();
   const { getCategory, categoryListData } = useCategoryStore();
@@ -49,7 +59,7 @@ export default function PostReview() {
   const [text, setText] = useState('');
   const [files, setFiles] = useState<string[]>([]);
   const [category, setCategory] = useState('');
-  const [content, setContent] = useState<any>(null);
+  const [content, setContent] = useState<ContentItem | null>(null);
   // 영화
   const [rating, setRating] = useState(0);
   const [rating2, setRating2] = useState(0);
@@ -134,7 +144,7 @@ export default function PostReview() {
     setFiles([]);
     setRating(0);
     setCategory('');
-    setContent('');
+    setContent(null);
   };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -147,9 +157,9 @@ export default function PostReview() {
       setIsLoading(true);
       // console.log(content);
       // 일본어 예외처리
-      let contentName = content.original_title || content.original_name;
-      if (content.original_language.includes('ja')) {
-        contentName = content.name;
+      let contentName = content?.original_title || content?.original_name;
+      if (content?.original_language.includes('ja')) {
+        contentName = content?.name;
       }
 
       const params = {
@@ -163,7 +173,7 @@ export default function PostReview() {
         userName: user.displayName || '익명의 사용자',
         userProfileImageUrl: user.photoURL || '',
         fileUrls: files,
-        contentId: content.id,
+        contentId: content?.id,
         contentName: contentName,
         category: category,
         createdAt: Date.now(),
@@ -187,7 +197,7 @@ export default function PostReview() {
     setStep(2);
   };
 
-  const handleContentClick = (content: any) => {
+  const handleContentClick = (content: ContentItem) => {
     setContent(content);
     setStep(3);
   };
@@ -254,10 +264,10 @@ export default function PostReview() {
         <FormContainer>
           <MovieInfoContainer>
             <MovieInfoImage
-              src={`https://image.tmdb.org/t/p/w92/${content.poster_path}`}
-              alt={content.original_title}
+              src={`https://image.tmdb.org/t/p/w92/${content?.poster_path}`}
+              alt={content?.original_title}
             />
-            <MovieInfoTitle>{content.original_title}</MovieInfoTitle>
+            <MovieInfoTitle>{content?.original_title}</MovieInfoTitle>
           </MovieInfoContainer>
           <RatingContainer>
             <RatingStarContainer>
