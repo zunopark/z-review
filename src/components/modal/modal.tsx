@@ -27,17 +27,17 @@ export default function Modal({
         <ModalMessage>{message}</ModalMessage>
         <ModalConfirm>
           <ModalConfirmButton
-            backgroundColor="#EF4444"
-            color="#fff"
-            border="none"
+            $backgroundcolor="#EF4444"
+            $color="#fff"
+            $border="none"
             onClick={onConfirm}
           >
             확인
           </ModalConfirmButton>
           <ModalConfirmButton
-            backgroundColor="#D7DBDC"
-            color="#000"
-            border="1px solid #6b7280"
+            $backgroundcolor="#D7DBDC"
+            $color="#000"
+            $border="1px solid #6b7280"
             onClick={onClose}
           >
             취소

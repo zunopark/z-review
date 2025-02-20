@@ -145,6 +145,13 @@ export default function PostReview() {
 
     try {
       setIsLoading(true);
+      // console.log(content);
+      // 일본어 예외처리
+      let contentName = content.original_title || content.original_name;
+      if (content.original_language.includes('ja')) {
+        contentName = content.name;
+      }
+
       const params = {
         userDescription: text,
         storyRating: rating,
@@ -157,9 +164,12 @@ export default function PostReview() {
         userProfileImageUrl: user.photoURL || '',
         fileUrls: files,
         contentId: content.id,
-        contentName: content.original_title,
+        contentName: contentName,
         category: category,
         createdAt: Date.now(),
+        totalLikes: 0,
+        totalComments: 0,
+        totalBookmarks: 0,
       };
       const reviewId = await postReviewToFirebase(params);
       console.log(reviewId);
@@ -341,33 +351,31 @@ export default function PostReview() {
                   onChange={onChange}
                   required
                 />
-                {category !== '영화' && files.length > 0 && (
-                  <ImagePreviewContainer>
-                    {files.map((file, index) => (
-                      <div key={index} style={{ position: 'relative' }}>
-                        <PreviewImage src={file} alt={`attached-${index}`} />
-                        <button
-                          onClick={() => removeImage(index)}
-                          style={{
-                            position: 'absolute',
-                            top: '8px',
-                            right: '8px',
-                            background: 'rgba(0, 0, 0, 0.5)',
-                            border: 'none',
-                            borderRadius: '50%',
-                            width: '24px',
-                            height: '24px',
-                            cursor: 'pointer',
-                            color: 'white',
-                          }}
-                          type="button"
-                        >
-                          ×
-                        </button>
-                      </div>
-                    ))}
-                  </ImagePreviewContainer>
-                )}
+                <ImagePreviewContainer>
+                  {files.map((file, index) => (
+                    <div key={index} style={{ position: 'relative' }}>
+                      <PreviewImage src={file} alt={`attached-${index}`} />
+                      <button
+                        onClick={() => removeImage(index)}
+                        style={{
+                          position: 'absolute',
+                          top: '8px',
+                          right: '8px',
+                          background: 'rgba(0, 0, 0, 0.5)',
+                          border: 'none',
+                          borderRadius: '50%',
+                          width: '24px',
+                          height: '24px',
+                          cursor: 'pointer',
+                          color: 'white',
+                        }}
+                        type="button"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </ImagePreviewContainer>
                 <ActionBar>
                   <AttachFileButton htmlFor="file">
                     <svg

@@ -18,7 +18,7 @@ import {
 
 export default function Profile() {
   const user = auth.currentUser;
-  const [avatarUrl, setAvatarUrl] = useState(user?.photoURL ?? '');
+  const [avatarUrl, setAvatarUrl] = useState(user?.photoURL || '/default.png');
   const [userName, setUserName] = useState(user?.displayName ?? '');
   const [isEditing, setIsEditing] = useState(false);
   const { userReviews, getUserReviews, updateUserReviewsName } =
@@ -111,7 +111,7 @@ export default function Profile() {
   return (
     <ProfileContainer>
       <AvatarUpload htmlFor="avatar-input">
-        {avatarUrl ? (
+        {avatarUrl && avatarUrl !== '' ? (
           <AvatarImage src={avatarUrl} />
         ) : (
           <svg

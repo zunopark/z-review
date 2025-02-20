@@ -28,6 +28,9 @@ export interface IReview {
   contentId: string;
   category: string; // 영화, 드라마, 애니메이션, 영화 등
   userProfileImageUrl: string;
+  totalLikes: number;
+  totalComments: number;
+  totalBookmarks: number;
 }
 
 interface ReviewState {
@@ -92,6 +95,9 @@ export const useReviewStore = create<ReviewState>((set) => ({
           themeRating,
           recommendationRating,
           userProfileImageUrl,
+          totalLikes,
+          totalComments,
+          totalBookmarks,
         } = doc.data();
         return {
           id: doc.id,
@@ -109,6 +115,9 @@ export const useReviewStore = create<ReviewState>((set) => ({
           themeRating,
           recommendationRating,
           userProfileImageUrl,
+          totalLikes,
+          totalComments,
+          totalBookmarks,
         };
       });
       set({ reviews });
@@ -148,6 +157,9 @@ export const useReviewStore = create<ReviewState>((set) => ({
           themeRating,
           recommendationRating,
           userProfileImageUrl,
+          totalLikes,
+          totalComments,
+          totalBookmarks,
         } = doc.data();
         return {
           id: doc.id,
@@ -165,6 +177,9 @@ export const useReviewStore = create<ReviewState>((set) => ({
           themeRating,
           recommendationRating,
           userProfileImageUrl,
+          totalLikes,
+          totalComments,
+          totalBookmarks,
         };
       });
       set({ userReviews: reviews });
@@ -203,6 +218,9 @@ export const useReviewStore = create<ReviewState>((set) => ({
             themeRating,
             recommendationRating,
             userProfileImageUrl,
+            totalLikes,
+            totalComments,
+            totalBookmarks,
           } = doc.data();
           return {
             id: doc.id,
@@ -220,6 +238,9 @@ export const useReviewStore = create<ReviewState>((set) => ({
             themeRating,
             recommendationRating,
             userProfileImageUrl,
+            totalLikes,
+            totalComments,
+            totalBookmarks,
           };
         });
         set({ reviews });

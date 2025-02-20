@@ -41,13 +41,13 @@ export const ModalConfirm = styled.div`
 `;
 
 export const ModalConfirmButton = styled.button<{
-  backgroundColor: string;
-  color: string;
-  border: string;
+  $backgroundcolor: string;
+  $color: string;
+  $border: string;
 }>`
-  background-color: ${(props) => props.backgroundColor};
-  color: ${(props) => props.color};
-  border: ${(props) => props.border};
+  background-color: ${(props) => props.$backgroundcolor};
+  color: ${(props) => props.$color};
+  border: ${(props) => props.$border};
   border-radius: 20px;
   padding: 10px 20px;
   cursor: pointer;

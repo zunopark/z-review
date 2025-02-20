@@ -4,12 +4,12 @@ import {
   query,
   orderBy,
   limit,
-  onSnapshot,
   getDocs,
   addDoc,
-  where,
-  writeBatch,
   serverTimestamp,
+  doc,
+  updateDoc,
+  increment,
 } from 'firebase/firestore';
 import { db } from '../../firebase';
 
@@ -29,6 +29,9 @@ export interface IReview {
   contentId: string;
   category: string; // 영화, 드라마, 애니메이션, 영화 등
   userProfileImageUrl: string;
+  totalLikes: number;
+  totalComments: number;
+  totalBookmarks: number;
 }
 
 interface BookmarkState {
@@ -49,16 +52,21 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
   addBookmark: async (userId: string, review: IReview) => {
     set({ isLoading: true });
     try {
-        console.log(userId, review);
       const bookmarksRef = collection(db, `users/${userId}/bookmarks`);
       await addDoc(bookmarksRef, {
         ...review,
         createdAt: serverTimestamp(),
       });
       
+      // Update the review's totalBookmarks count in the reviews collection
+      const reviewRef = doc(db, 'reviews', review.id!);
+      await updateDoc(reviewRef, {
+        totalBookmarks: increment(1)
+      });
+      
       // Refresh bookmarks list after adding
       const currentBookmarks = useBookmarkStore.getState().bookmarks;
-      set({ bookmarks: [{ ...review }, ...currentBookmarks] });
+      set({ bookmarks: [{ ...review, totalBookmarks: review.totalBookmarks + 1 }, ...currentBookmarks] });
     } catch (error) {
       console.error('Error adding bookmarks:', error);
       set({ isError: true });
