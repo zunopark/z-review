@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const MainWrapper = styled.div`
   display: flex;
@@ -18,10 +18,10 @@ export const MainContainer = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-  
+
   /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 `;
 
 export const Sidebar = styled.div`
@@ -69,24 +69,23 @@ export const SideTitle = styled.h1`
 
 export const More = styled.button`
   background-color: transparent;
-  color: #70767B;
+  color: #70767b;
   font-size: 14px;
   font-weight: 600;
   margin-top: 10px;
   border: none;
   cursor: pointer;
   &:hover {
-    color: #FFFFFF;
+    color: #ffffff;
   }
 `;
 
 export const SubName = styled.span`
   font-size: 12px;
-  color: #70767B;
+  color: #70767b;
 `;
 
 export const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
 `;
-

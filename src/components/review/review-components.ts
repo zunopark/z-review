@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ReviewContainer = styled.div`
   border: 1px solid rgb(47, 51, 54);
@@ -11,7 +11,7 @@ export const FlexRow = styled.div`
   gap: 0.75rem;
 `;
 
-export const Avatar = styled.div`
+export const Avatar = styled.img`
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 9999px;
@@ -65,7 +65,7 @@ export const Button = styled.button`
   background: transparent;
   color: #6b7280;
   cursor: pointer;
-  
+
   svg {
     width: 24px;
     height: 24px;
@@ -121,7 +121,7 @@ export const RatingStars = styled.div`
 `;
 
 export const Star = styled.span<{ $filled: boolean }>`
-  color: ${props => props.$filled ? '#ffc107' : '#e4e5e9'};
+  color: ${(props) => (props.$filled ? '#ffc107' : '#e4e5e9')};
 `;
 
 export const ReviewImages = styled.div`
@@ -141,7 +141,7 @@ export const ReviewImage = styled.img`
   object-fit: cover;
   border-radius: 8px;
   cursor: pointer;
-  
+
   &:hover {
     opacity: 0.9;
   }

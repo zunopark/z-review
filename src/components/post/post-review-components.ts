@@ -1,7 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-`;
+export const Wrapper = styled.div``;
 
 export const Form = styled.form`
   border: 1px solid rgb(47, 51, 54);
@@ -34,7 +33,7 @@ export const Textarea = styled.textarea`
   outline: none;
   background-color: transparent;
   color: white;
-  
+
   &::placeholder {
     color: rgb(83, 100, 113);
   }
@@ -76,17 +75,17 @@ export const AttachFileInput = styled.input`
 `;
 
 export const SubmitButton = styled.input<{ $hasText: boolean }>`
-  background-color: #D7DBDC;
+  background-color: #d7dbdc;
   border: none;
   border-radius: 20px;
   padding: 8px 16px;
   color: black;
   font-weight: 600;
-  cursor: ${props => props.$hasText ? 'pointer' : 'default'};
+  cursor: ${(props) => (props.$hasText ? 'pointer' : 'default')};
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: ${props => props.$hasText ? '#1a8cd8' : '#8ecdf8'};
+    background-color: ${(props) => (props.$hasText ? '#1a8cd8' : '#8ecdf8')};
   }
 `;
 
@@ -123,9 +122,11 @@ export const StarButton = styled.button<{ $isSelected: boolean }>`
   border: none;
   cursor: pointer;
   padding: 0;
-  color: ${props => props.$isSelected ? '#FFD700' : '#E0E0E0'};
+  color: ${(props) => (props.$isSelected ? '#FFD700' : '#E0E0E0')};
   font-size: 24px;
-  transition: color 0.2s, transform 0.1s;
+  transition:
+    color 0.2s,
+    transform 0.1s;
 
   &:hover {
     transform: scale(1.1);
@@ -152,12 +153,12 @@ export const CategoryImage = styled.img`
 `;
 
 export const BackButton = styled.span`
-    cursor: pointer;
+  cursor: pointer;
 
-    svg {
-        width: 24px;
-        height: 24px;
-    }
+  svg {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 export const SearchResultContainer = styled.div`

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ProfileContainer = styled.div`
   display: flex;
@@ -52,7 +52,7 @@ export const UserNameInput = styled.input`
   background: transparent;
   color: white;
   margin-bottom: 10px;
-  
+
   &:focus {
     border-bottom-color: #007bff;
   }
@@ -63,7 +63,7 @@ export const UserName = styled.div`
   font-weight: bold;
   cursor: pointer;
   padding: 4px 8px;
-  
+
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
     border-radius: 4px;

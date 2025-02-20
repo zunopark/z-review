@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ThreeDots, OptionModal, OptionItem } from "./review-option-modal-components";
+import {
+  ThreeDots,
+  OptionModal,
+  OptionItem,
+} from './review-option-modal-components';
 import { auth, db } from '../../firebase';
 import { deleteDoc, doc } from 'firebase/firestore';
 import Modal from '../modal/modal';
@@ -9,7 +13,10 @@ interface ReviewOptionsProps {
   userId: string;
 }
 
-export default function ReviewOptions({ reviewId, userId }: ReviewOptionsProps) {
+export default function ReviewOptions({
+  reviewId,
+  userId,
+}: ReviewOptionsProps) {
   const navigate = useNavigate();
   const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -19,8 +26,8 @@ export default function ReviewOptions({ reviewId, userId }: ReviewOptionsProps) 
 
   const handleConfirm = async () => {
     if (user?.uid === userId) {
-      await deleteDoc(doc(db, "reviews", reviewId));
-      navigate("/");
+      await deleteDoc(doc(db, 'reviews', reviewId));
+      navigate('/');
     }
     setIsModalOpen(false);
   };
@@ -32,7 +39,7 @@ export default function ReviewOptions({ reviewId, userId }: ReviewOptionsProps) 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        modalRef.current && 
+        modalRef.current &&
         !modalRef.current.contains(event.target as Node) &&
         buttonRef.current &&
         !buttonRef.current.contains(event.target as Node)
@@ -56,22 +63,33 @@ export default function ReviewOptions({ reviewId, userId }: ReviewOptionsProps) 
     try {
       setIsModalOpen(true);
     } catch (error) {
-      console.error("Error deleting review:", error);
+      console.error('Error deleting review:', error);
     }
   };
 
   return (
     <>
       <ThreeDots ref={buttonRef} onClick={toggleOptionModal}>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="size-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          />
         </svg>
         {isOptionModalOpen && (
           <OptionModal ref={modalRef}>
             {user?.uid === userId && (
               <>
-                  <OptionItem>수정</OptionItem>
-                  <OptionItem onClick={handleDelete}>삭제</OptionItem>
+                <OptionItem>수정</OptionItem>
+                <OptionItem onClick={handleDelete}>삭제</OptionItem>
               </>
             )}
             <OptionItem>신고</OptionItem>

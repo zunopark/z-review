@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const TopContent = styled.div`
   width: 100%;
@@ -16,11 +16,11 @@ const TopContent = styled.div`
 const Info = styled.div`
   display: flex;
   flex-direction: column;
-`;  
+`;
 
 const Category = styled.span`
   font-size: 12px;
-  color: #70767B;
+  color: #70767b;
 `;
 
 const Title = styled.span`
@@ -30,30 +30,27 @@ const Title = styled.span`
 
 const NumofCategory = styled.span`
   font-size: 12px;
-  color: #70767B;
+  color: #70767b;
 `;
 
-const Picture = styled.div`
-`;
+const Picture = styled.div``;
 
 const PictureImage = styled.img`
   width: 50px;
   height: 50px;
 `;
 
-
-
 export default function Trending() {
   return (
     <TopContent>
-        <Info>
-            <Category>영화</Category>
-            <Title>인터스텔라</Title>
-            <NumofCategory>2000 reviews</NumofCategory>
-        </Info>
-        <Picture>
-            <PictureImage src="https://picsum.photos/200/300" alt="picture" />
-        </Picture>
+      <Info>
+        <Category>영화</Category>
+        <Title>인터스텔라</Title>
+        <NumofCategory>2000 reviews</NumofCategory>
+      </Info>
+      <Picture>
+        <PictureImage src="https://picsum.photos/200/300" alt="picture" />
+      </Picture>
     </TopContent>
   );
 }

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Review from "../components/review/review";
+import Review from '../components/review/review';
 import { useEffect } from 'react';
 import { useReviewStore } from '../store/review/useReviewStore';
 
@@ -23,5 +23,5 @@ export default function Home() {
         <Review key={index} review={review} />
       ))}
     </ReviewsContainer>
-  )
+  );
 }
