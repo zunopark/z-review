@@ -16,6 +16,12 @@ interface SearchState {
   resetSearchMovieListData: () => void
 }
 
+const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
+if (!TMDB_API_KEY) {
+  throw new Error('TMDB_API_KEY is not defined');
+}
+
 export const useSearchStore = create<SearchState>((set) => ({
   searchMovieListData: [],
 
@@ -23,13 +29,13 @@ export const useSearchStore = create<SearchState>((set) => ({
     const url = `https://api.themoviedb.org/3/search/movie?query=${value}`;
     const response = await axios.get(url, {
         headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzNTc4MTM4ZDg5M2NjNTkxZmRhOWZmZDhmM2FlYjlhOSIsIm5iZiI6MTYwOTQ4OTgzMC4zMTAwMDAyLCJzdWIiOiI1ZmVlZGRhNjE3NmE5NDAwNDVlNTc3YmQiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.E09VlwdpQbRJ9m7SJiT6Bsg_yjdtrVnHgFZLEMUrsC0',
+            'Authorization': `Bearer ${TMDB_API_KEY}`,
             'accept': 'application/json'
         }
     });
     set({ searchMovieListData: response.data.results });
   },
-  
+
   resetSearchMovieListData: () => {
     set({ searchMovieListData: [] });
   }

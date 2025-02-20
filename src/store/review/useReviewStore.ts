@@ -1,11 +1,29 @@
 import { create } from 'zustand'
 import { collection, query, orderBy, limit, onSnapshot, getDocs, addDoc, where, writeBatch } from 'firebase/firestore'
 import { db } from '../../firebase'
-import { IReview } from '../../components/review/review-components'
+
+export interface IReview {
+  id?: string; // unique id of review
+  userDescription: string;
+  storyRating: number;
+  characterRating: number;
+  technicalRating: number;
+  themeRating: number;
+  recommendationRating: number;
+  createdAt: number;
+  userName: string;
+  userId: string; // unique id of user
+  fileUrls: string[];
+  contentName: string;
+  contentId: string;
+  category: string; // 영화, 드라마, 애니메이션, 영화 등
+}
 
 interface ReviewState {
   reviews: IReview[]
   userReviews: IReview[]
+  isLoading: boolean
+  isError: boolean
   getReviews: () => Promise<void>
   getUserReviews: (userId: string) => Promise<void>
   getRealtimeReviews: () => Promise<void>
@@ -14,20 +32,36 @@ interface ReviewState {
   unsubscribe: (() => void) | null
 }
 
+const REVIEW_LIMIT = 20;
+const REVIEWS_COLLECTION = "reviews";
+
 export const useReviewStore = create<ReviewState>((set) => ({
   reviews: [],
   userReviews: [],
   unsubscribe: null,
+  isLoading: false,
+  isError: false,
 
   postReviewToFirebase: async (review: IReview) => {
-    const reviewRef = collection(db, "reviews");
-    const docRef = await addDoc(reviewRef, review);
-    return docRef.id;
+    set({ isLoading: true });
+    try {
+      const reviewRef = collection(db, REVIEWS_COLLECTION);
+      const docRef = await addDoc(reviewRef, review);
+      return docRef.id;
+    } catch (error) {
+      console.error("Error posting review to Firebase:", error);
+      set({ isError: true });
+      throw error;
+    } finally {
+      set({ isLoading: false });
+    }
   },
 
   getReviews: async () => {
-    const reviewRef = collection(db, "reviews")
-    const querySnapshot = await getDocs(query(reviewRef, orderBy("createdAt", "desc"), limit(20)));
+    set({ isLoading: true });
+    try {
+      const reviewRef = collection(db, REVIEWS_COLLECTION)
+      const querySnapshot = await getDocs(query(reviewRef, orderBy("createdAt", "desc"), limit(REVIEW_LIMIT)));
 
     const reviews = querySnapshot.docs.map((doc) => {
     const { text, createdAt, userName, userId, fileUrls, contentName, contentId, category, userDescription, storyRating, characterRating, technicalRating, themeRating, recommendationRating } = doc.data();
@@ -50,12 +84,20 @@ export const useReviewStore = create<ReviewState>((set) => ({
     };
     });
     set({ reviews });
+    } catch (error) {
+      console.error("Error getting reviews:", error);
+      set({ isError: true });
+    } finally {
+      set({ isLoading: false });
+    }
   },
 
   getUserReviews: async (userId: string) => {
-    const reviewRef = collection(db, "reviews")
-    const querySnapshot = await getDocs(query(reviewRef, where("userId", "==", userId), orderBy("createdAt", "desc"), limit(20)));
-    const reviews = querySnapshot.docs.map((doc) => {
+    set({ isLoading: true });
+    try {
+      const reviewRef = collection(db, REVIEWS_COLLECTION)
+      const querySnapshot = await getDocs(query(reviewRef, where("userId", "==", userId), orderBy("createdAt", "desc"), limit(REVIEW_LIMIT)));
+      const reviews = querySnapshot.docs.map((doc) => {
       const { text, createdAt, userName, userId, fileUrls, contentName, contentId, category, userDescription, storyRating, characterRating, technicalRating, themeRating, recommendationRating } = doc.data();
       return {
         id: doc.id,
@@ -76,12 +118,20 @@ export const useReviewStore = create<ReviewState>((set) => ({
       };
     });
     set({ userReviews: reviews });
+    } catch (error) {
+      console.error("Error getting user reviews:", error);
+      set({ isError: true });
+    } finally {
+      set({ isLoading: false });
+    }
   },
 
   getRealtimeReviews: async () => {
-    const reviewRef = collection(db, "reviews")
-    const q = query(reviewRef, orderBy("createdAt", "desc"), limit(20))
-    
+    set({ isLoading: true });
+    try {
+      const reviewRef = collection(db, REVIEWS_COLLECTION)
+      const q = query(reviewRef, orderBy("createdAt", "desc"), limit(REVIEW_LIMIT))
+      
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const reviews = snapshot.docs.map((doc) => {
         const { text, createdAt, userName, userId, fileUrls, contentName, contentId, category, userDescription, storyRating, characterRating, technicalRating, themeRating, recommendationRating } = doc.data()
@@ -107,26 +157,28 @@ export const useReviewStore = create<ReviewState>((set) => ({
     })
     
     set({ unsubscribe });
+    } catch (error) {
+      console.error("Error getting realtime reviews:", error);
+      set({ isError: true });
+    } finally {
+      set({ isLoading: false });
+    }
   },
 
   updateUserReviewsName: async (userId: string, newName: string) => {
+    set({ isLoading: true });
     try {
       const batch = writeBatch(db);
-      
-      // Get all reviews for the user
-      const reviewsRef = collection(db, "reviews");
+      const reviewsRef = collection(db, REVIEWS_COLLECTION);
       const q = query(reviewsRef, where("userId", "==", userId));
       const querySnapshot = await getDocs(q);
       
-      // Update each review's username
       querySnapshot.forEach((doc) => {
         batch.update(doc.ref, { userName: newName });
       });
       
-      // Commit the batch
       await batch.commit();
       
-      // Update local state
       set((state) => ({
         userReviews: state.userReviews.map(review => ({
           ...review,
@@ -137,7 +189,10 @@ export const useReviewStore = create<ReviewState>((set) => ({
       return true;
     } catch (error) {
       console.error("Error updating review usernames:", error);
+      set({ isError: true });
       return false;
+    } finally {
+      set({ isLoading: false });
     }
   }
 }))

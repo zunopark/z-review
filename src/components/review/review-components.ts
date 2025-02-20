@@ -168,23 +168,3 @@ export const RatingInfoContainer = styled.div`
 export const RatingInfo = styled.span`
   font-size: 12px;
 `;
-
-
-
-
-export interface IReview {
-  id?: string; // unique id of review
-  userDescription: string;
-  storyRating: number;
-  characterRating: number;
-  technicalRating: number;
-  themeRating: number;
-  recommendationRating: number;
-  createdAt: number;
-  userName: string;
-  userId: string; // unique id of user
-  fileUrls: string[];
-  contentName: string;
-  contentId: string;
-  category: string; // 영화, 드라마, 애니메이션, 영화 등
-}

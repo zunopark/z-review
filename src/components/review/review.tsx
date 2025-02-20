@@ -1,7 +1,7 @@
 import { formatRelativeTime } from '../../util';
-import { ReviewContainer, FlexRow, Avatar, Content, Header, UserName, UserHandle, Dot, TimeStamp, ReviewText, InteractionButtons, Button, Badge, UserLevel, ReviewedContent, ProductInfo, ProductName, RatingStars, Star, ReviewImages, ImageGrid, ReviewImage, IReview, UserInfoContainer, RatingResultContainer, RatingInfoContainer, RatingInfo } from './review-components';
+import { ReviewContainer, FlexRow, Avatar, Content, Header, UserName, UserHandle, Dot, TimeStamp, ReviewText, InteractionButtons, Button, Badge, UserLevel, ReviewedContent, ProductInfo, ProductName, RatingStars, Star, ReviewImages, ImageGrid, ReviewImage, UserInfoContainer, RatingResultContainer, RatingInfoContainer, RatingInfo } from './review-components';
 import ReviewOptions from '../review-option-modal/review-option-modal';
-
+import { IReview } from '../../store/review/useReviewStore';
 export default function Review({ review }: { review: IReview }) {
   console.log(review);
   return (
