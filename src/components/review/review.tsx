@@ -34,18 +34,20 @@ import { useState } from 'react';
 
 export default function Review({ review }: { review: IReview }) {
   const { addBookmark } = useBookmarkStore();
-  const [localBookmarkCount, setLocalBookmarkCount] = useState(review.totalBookmarks || 0);
+  const [localBookmarkCount, setLocalBookmarkCount] = useState(
+    review.totalBookmarks || 0,
+  );
 
   const handleBookmarkClick = (review: IReview) => {
     addBookmark(review.userId, review);
-    setLocalBookmarkCount(prev => prev + 1);
+    setLocalBookmarkCount((prev) => prev + 1);
   };
-  
+
   return (
     <ReviewContainer>
       <FlexRow>
-        <Avatar 
-          src={review.userProfileImageUrl || '/default.png'} 
+        <Avatar
+          src={review.userProfileImageUrl || '/default.png'}
           alt={`${review.userName}'s profile`}
         />
         <Content>
@@ -64,15 +66,13 @@ export default function Review({ review }: { review: IReview }) {
           <ReviewedContent>
             <ProductInfo>
               <ProductName>{review.contentName}</ProductName>
-                <RatingResultContainer>
+              <RatingResultContainer>
                 <RatingInfoContainer>
                   <RatingInfo>개연성 {review.storyRating}</RatingInfo>
                   <RatingInfo>캐릭터 {review.characterRating}</RatingInfo>
                   <RatingInfo>기술 {review.technicalRating}</RatingInfo>
                   <RatingInfo>테마 {review.themeRating}</RatingInfo>
-                  <RatingInfo>
-                    추천도 {review.recommendationRating}
-                  </RatingInfo>
+                  <RatingInfo>추천도 {review.recommendationRating}</RatingInfo>
                 </RatingInfoContainer>
                 <RatingStars>
                   {[1, 2, 3, 4, 5].map((star) => (
@@ -100,13 +100,14 @@ export default function Review({ review }: { review: IReview }) {
 
           <ReviewImages>
             <ImageGrid>
-              {review.fileUrls.length > 0 && review.fileUrls.map((image, index) => (
-                <ReviewImage
-                  key={index}
-                  src={image}
-                  alt={`Review image ${index + 1}`}
-                />
-              ))}
+              {review.fileUrls.length > 0 &&
+                review.fileUrls.map((image, index) => (
+                  <ReviewImage
+                    key={index}
+                    src={image}
+                    alt={`Review image ${index + 1}`}
+                  />
+                ))}
             </ImageGrid>
           </ReviewImages>
 

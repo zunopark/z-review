@@ -41,7 +41,8 @@ export const Search = ({ category }: { category: string }) => {
         getAnime(debouncedSearchTerm);
       } else if (category === 'TV쇼') {
         getTvShow(debouncedSearchTerm);
-      } else { // 현재 등록된 리뷰 중에서 검색
+      } else {
+        // 현재 등록된 리뷰 중에서 검색
         alert('현재 등록된 리뷰 중에서 검색 기능은 아직 준비중입니다.');
       }
     }

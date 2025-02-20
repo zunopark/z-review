@@ -1,8 +1,8 @@
-import { BookmarkContainer, BookmarkTitle } from "./bookmark-components";
-import { useBookmarkStore } from "../../store/bookmark/useBookmarkStore";
-import Review from "../../components/review/review";
-import { useEffect } from "react";
-import { auth } from "../../firebase";
+import { BookmarkContainer, BookmarkTitle } from './bookmark-components';
+import { useBookmarkStore } from '../../store/bookmark/useBookmarkStore';
+import Review from '../../components/review/review';
+import { useEffect } from 'react';
+import { auth } from '../../firebase';
 
 export default function Bookmark() {
   const { bookmarks, getBookmarks } = useBookmarkStore();
@@ -21,5 +21,5 @@ export default function Bookmark() {
         <Review key={index} review={review} />
       ))}
     </BookmarkContainer>
-  )
+  );
 }

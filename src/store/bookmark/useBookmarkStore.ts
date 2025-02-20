@@ -57,16 +57,21 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
         ...review,
         createdAt: serverTimestamp(),
       });
-      
+
       // Update the review's totalBookmarks count in the reviews collection
       const reviewRef = doc(db, 'reviews', review.id!);
       await updateDoc(reviewRef, {
-        totalBookmarks: increment(1)
+        totalBookmarks: increment(1),
       });
-      
+
       // Refresh bookmarks list after adding
       const currentBookmarks = useBookmarkStore.getState().bookmarks;
-      set({ bookmarks: [{ ...review, totalBookmarks: review.totalBookmarks + 1 }, ...currentBookmarks] });
+      set({
+        bookmarks: [
+          { ...review, totalBookmarks: review.totalBookmarks + 1 },
+          ...currentBookmarks,
+        ],
+      });
     } catch (error) {
       console.error('Error adding bookmarks:', error);
       set({ isError: true });
@@ -80,18 +85,14 @@ export const useBookmarkStore = create<BookmarkState>((set) => ({
     try {
       const bookmarksRef = collection(db, `users/${userId}/bookmarks`);
       const querySnapshot = await getDocs(
-        query(
-          bookmarksRef,
-          orderBy('createdAt', 'desc'),
-          limit(LIMIT)
-        )
+        query(bookmarksRef, orderBy('createdAt', 'desc'), limit(LIMIT)),
       );
-      
+
       const bookmarks = querySnapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       })) as IReview[];
-      
+
       set({ bookmarks });
     } catch (error) {
       console.error('Error getting bookmarks:', error);
