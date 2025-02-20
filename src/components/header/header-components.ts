@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 export const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr; 
+  grid-template-columns: 1fr;
   background-color: #000;
   padding: 0px;
   width: 100%;
@@ -43,18 +43,17 @@ export const MenuItem = styled.div<{ $isActive?: boolean }>`
   transition: background-color 0.2s ease;
   width: fit-content;
   color: white;
-  font-weight: ${props => props.$isActive ? '700' : '350'};
+  font-weight: ${(props) => (props.$isActive ? '700' : '350')};
   font-size: 20px;
 
   &:hover {
     background-color: rgba(239, 243, 244, 0.1);
   }
 
-
   svg {
     width: 26px;
     height: 26px;
-    stroke-width: ${props => props.$isActive ? '2.5' : '1.5'};
+    stroke-width: ${(props) => (props.$isActive ? '2.5' : '1.5')};
     stroke: white;
   }
 `;
@@ -72,7 +71,7 @@ export const MenuContainer = styled.div`
 `;
 
 export const PostButton = styled.button`
-  background-color: #D7DBDC;
+  background-color: #d7dbdc;
   color: black;
   border: none;
   border-radius: 50px;

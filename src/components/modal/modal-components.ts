@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ModalContainer = styled.div`
   position: fixed;
@@ -15,7 +15,7 @@ export const ModalContainer = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  background: #D7DBDC;
+  background: #d7dbdc;
   padding: 20px;
   border-radius: 10px;
   min-width: 300px;
@@ -40,10 +40,14 @@ export const ModalConfirm = styled.div`
   gap: 10px;
 `;
 
-export const ModalConfirmButton = styled.button<{ backgroundColor: string, color: string, border: string }>`
-  background-color: ${props => props.backgroundColor};
-  color: ${props => props.color};
-  border: ${props => props.border};
+export const ModalConfirmButton = styled.button<{
+  backgroundColor: string;
+  color: string;
+  border: string;
+}>`
+  background-color: ${(props) => props.backgroundColor};
+  color: ${(props) => props.color};
+  border: ${(props) => props.border};
   border-radius: 20px;
   padding: 10px 20px;
   cursor: pointer;
@@ -51,4 +55,3 @@ export const ModalConfirmButton = styled.button<{ backgroundColor: string, color
   font-weight: 700;
   width: 100%;
 `;
-

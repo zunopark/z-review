@@ -1,52 +1,56 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import Layout from "./components/layout/layout"
-import Home from "./routes/home"
-import Profile from "./routes/profile/profile"
-import Login from "./routes/login";
-import CreateAccount from "./routes/create-account";
-import reset from "styled-reset";
-import styled, { createGlobalStyle } from "styled-components";
-import { useEffect, useState } from "react";
-import LoadingScreen from "./components/loading-screen";
-import { auth } from "./firebase";
-import ProtectedRoute from "./components/protected-route";
-import Search from "./routes/search";
-import Bookmark from "./routes/boomark/bookmark";
-import Post from "./routes/post";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Layout from './components/layout/layout';
+import Home from './routes/home';
+import Profile from './routes/profile/profile';
+import Login from './routes/login';
+import CreateAccount from './routes/create-account';
+import reset from 'styled-reset';
+import styled, { createGlobalStyle } from 'styled-components';
+import { useEffect, useState } from 'react';
+import LoadingScreen from './components/loading-screen';
+import { auth } from './firebase';
+import ProtectedRoute from './components/protected-route';
+import Search from './routes/search';
+import Bookmark from './routes/boomark/bookmark';
+import Post from './routes/post';
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <ProtectedRoute><Layout /></ProtectedRoute>,
+    path: '/',
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
       {
-        path: "/",
+        path: '/',
         element: <Home />,
       },
       {
-        path: "/profile",
+        path: '/profile',
         element: <Profile />,
       },
       {
-        path: "/search",
+        path: '/search',
         element: <Search />,
       },
       {
-        path: "/bookmark",
+        path: '/bookmark',
         element: <Bookmark />,
       },
       {
-        path: "/post",
-        element: <Post />, 
+        path: '/post',
+        element: <Post />,
       },
     ],
   },
   {
-    path: "/login",
+    path: '/login',
     element: <Login />,
   },
   {
-    path: "/create-account",
+    path: '/create-account',
     element: <CreateAccount />,
   },
 ]);
@@ -77,7 +81,7 @@ function App() {
     if (user) {
       setIsLoggedIn(true);
     }
-  }
+  };
 
   useEffect(() => {
     init();
@@ -91,4 +95,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

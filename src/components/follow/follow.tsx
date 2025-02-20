@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const BottomContent = styled.div`
   width: 100%;
@@ -30,11 +30,11 @@ const Name = styled.span`
 
 const SubName = styled.span`
   font-size: 12px;
-  color: #70767B;
+  color: #70767b;
 `;
 
 const FollowButton = styled.button`
-  background-color: #D7DBDC;
+  background-color: #d7dbdc;
   color: black;
   border: none;
   border-radius: 20px;
@@ -53,14 +53,14 @@ const Content = styled.div`
 export default function Follow() {
   return (
     <BottomContent>
-        <Content>
-            <ProfileImage src="https://picsum.photos/200/300" alt="profile" />
-            <Info>
-                <Name>zzunopark</Name>
-                <SubName>@zzunopark</SubName>
-            </Info>
-        </Content>
-        <FollowButton>Follow</FollowButton>
+      <Content>
+        <ProfileImage src="https://picsum.photos/200/300" alt="profile" />
+        <Info>
+          <Name>zzunopark</Name>
+          <SubName>@zzunopark</SubName>
+        </Info>
+      </Content>
+      <FollowButton>Follow</FollowButton>
     </BottomContent>
   );
 }

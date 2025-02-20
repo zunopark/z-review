@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Form } from "react-router-dom";
+import styled from 'styled-components';
+import { Form } from 'react-router-dom';
 
 export const Container = styled.div`
   height: 100vh;
@@ -36,7 +36,6 @@ export const Wrapper = styled.div`
   padding: 20px;
 `;
 
-
 export const StyledForm = styled(Form)`
   margin-top: 50px;
   margin-bottom: 10px;
@@ -53,7 +52,7 @@ export const Input = styled.input`
   border: noen;
   border-radius: 50px;
   font-size: 16px;
-  &[type="submit"] {
+  &[type='submit'] {
     cursor: pointer;
     &:hover {
       opacity: 0.8;
@@ -69,7 +68,6 @@ export const Title = styled.h1`
 export const Error = styled.span`
   font-weight: 600;
   color: tomato;
-
 `;
 
 export const Switcher = styled.span`
@@ -81,19 +79,19 @@ export const Switcher = styled.span`
 `;
 
 export const SocialButton = styled.button`
-background-color: white;
-font-weight: 500;
-padding: 10px 20px;
-border-radius: 50px;
-display: flex;
-gap: 5px;
-align-items: center;
-justify-content: center;
-border: 0;
-cursor: pointer;
-width: 100%;
-color: black;
-margin-top: 20px;
+  background-color: white;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 50px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  cursor: pointer;
+  width: 100%;
+  color: black;
+  margin-top: 20px;
 `;
 
 export const SocialLogo = styled.img`
