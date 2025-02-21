@@ -40,7 +40,6 @@ import { useCategoryStore } from '../../store/category/useCategoryStore';
 import { Search } from '../search/search';
 import { useSearchStore } from '../../store/search/useSearchStore';
 
-// Add this interface before the component
 interface ContentItem {
   id: number;
   poster_path: string;
@@ -157,9 +156,9 @@ export default function PostReview() {
       setIsLoading(true);
       // console.log(content);
       // 일본어 예외처리
-      let contentName = content?.original_title || content?.original_name;
-      if (content?.original_language.includes('ja')) {
-        contentName = content?.name;
+      let contentName = content?.original_title || content?.original_name || '';
+      if (content?.original_language?.includes('ja')) {
+        contentName = content?.name || '';
       }
 
       const params = {
@@ -173,7 +172,7 @@ export default function PostReview() {
         userName: user.displayName || '익명의 사용자',
         userProfileImageUrl: user.photoURL || '',
         fileUrls: files,
-        contentId: content?.id,
+        contentId: content?.id?.toString() || '',
         contentName: contentName,
         category: category,
         createdAt: Date.now(),
